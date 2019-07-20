@@ -31,14 +31,53 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IllusionPlugin">
+      <HintPath>..\Libs\IPA\IPA\Data\Managed\IllusionPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>Libs\Unity2018.3\UnityEngine.AssetBundleModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>Libs\Unity2018.3\UnityEngine.AudioModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>Libs\Unity2018.3\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>Libs\Unity2018.3\UnityEngine.VRModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>Libs\Unity2018.3\UnityEngine.XRModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreModule\ControlMode.cs" />
+    <Compile Include="CoreModule\VRCamera.cs" />
+    <Compile Include="CoreModule\VRManager.cs" />
+    <Compile Include="Extension\ComponentExtension.cs" />
+    <Compile Include="Extension\GameObjectExtension.cs" />
+    <Compile Include="Extension\TransformExtension.cs" />
+    <Compile Include="Libs\uDesktopDuiplication\Lib.cs" />
+    <Compile Include="Libs\uDesktopDuiplication\Manager.cs" />
+    <Compile Include="Libs\uDesktopDuiplication\Monitor.cs" />
+    <Compile Include="Libs\uDesktopDuiplication\Texture.cs" />
+    <Compile Include="Libs\uDesktopDuiplication\Utility.cs" />
+    <Compile Include="Libs\VRGIN\Core\Logger.cs" />
+    <Compile Include="Libs\VRGIN\Core\ProtectedBahaviour.cs" />
+    <Compile Include="Mode\SeatedMode.cs" />
+    <Compile Include="Mode\StandingMode.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -53,9 +92,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\" />
-    <Folder Include="Helper\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /y $(TargetPath) E:\PlayDisc\06_VR\yami_v1.0.2_VRMOD\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

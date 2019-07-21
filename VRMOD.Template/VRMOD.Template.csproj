@@ -26,7 +26,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;UNITY_2018_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -95,13 +95,16 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <None Include="Resource\Unity2018.3\vrmod_2018_3" />
+    <None Include="Resource\vrmod_2018_3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /y $(TargetPath) E:\PlayDisc\06_VR\yami_v1.0.2_VRMOD\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\IPA $(SolutionDir)$(OutDir)$(ProjectName)\
+copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>
   </PropertyGroup>
 </Project>

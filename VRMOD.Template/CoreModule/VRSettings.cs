@@ -156,10 +156,12 @@ namespace VRMOD.CoreModule
         /// <returns></returns>
         public static T Load<T>(string path) where T : VRSettings
         {
+            VRLog.Info("VRSettings Load Start");
             try
             {
                 if (!File.Exists(path))
                 {
+                    VRLog.Info("VRSettings Not Exist Create New XML File.");
                     var settings = Activator.CreateInstance<T>();
                     settings.Save(path);
                     return settings;
@@ -171,15 +173,18 @@ namespace VRMOD.CoreModule
                     {
                         var settings = serializer.Deserialize(stream) as T;
                         settings.Path = path;
+                        VRLog.Info("VRSettings Load End");
                         return settings;
                     }
                 }
+                
             }
             catch (Exception e)
             {
                 VRLog.Error("Fatal exception occured while loading XML! (Make sure System.Xml exists!) {0}", e);
                 throw e;
             }
+
         }
 
         /// <summary>

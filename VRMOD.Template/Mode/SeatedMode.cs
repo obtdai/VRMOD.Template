@@ -5,7 +5,6 @@ using System.Text;
 using VRMOD.CoreModule;
 using VRMOD.Extension;
 using UnityEngine;
-using UnityEngine.XR;
 using VRGIN.Core;
 using VRGIN.Controls;
 using VRGIN.Helpers;
@@ -19,10 +18,14 @@ namespace VRMOD.Mode
 
         protected override void OnAwake()
         {
+            VRLog.Info("OnAWake()");
             base.OnAwake();
             // 座位モードに変更.
-            XRDevice.SetTrackingSpaceType(TrackingSpaceType.Stationary);
-            VRLog.Info("OnAWake()");
+#if UNITY_2018_3_OR_NEWER
+            UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.Stationary);
+#else
+            UnityEngine.VR.VRDevice.SetTrackingSpaceType(UnityEngine.VR.TrackingSpaceType.Stationary);
+#endif
             CreateMonitor();
             MoveMonitor(VR.Camera.transform);
         }
@@ -32,19 +35,34 @@ namespace VRMOD.Mode
             return base.CreateShortcuts().Concat(new IShortcut[] {
                 new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+C"), () => { VRLog.Info("Mode Change to Standing Mode"); VR.Manager.SetMode<StandingMode>(); }),
                 new KeyboardShortcut(new KeyStroke("Space"), () => {
-                    if (monitor.activeSelf)
+                    if (monitor != null)
                     {
-                        monitor.SetActive(false);
-                        VRLog.Info("Monitor inactive");
+                        if (monitor.activeSelf)
+                        {
+                            monitor.SetActive(false);
+                            VRLog.Info("Monitor inactive");
+                        }
+                        else
+                        {
+                            MoveMonitor(VR.Camera.transform);
+                            monitor.SetActive(true);
+                            VRLog.Info($"Monitor active, show position is {monitor.transform.position}");
+                        }
                     }
                     else
                     {
+                        VRLog.Info($"Monitor is Destryed. Recreated Yet.");
+                        CreateMonitor();
                         MoveMonitor(VR.Camera.transform);
                         monitor.SetActive(true);
                         VRLog.Info($"Monitor active, show position is {monitor.transform.position}");
                     }
                 }),
-                new KeyboardShortcut(new KeyStroke("R"), () => { VRLog.Info("VR Camera Recenterd"); InputTracking.Recenter(); })
+#if UNITY_2018_3_OR_NEWER
+                new KeyboardShortcut(new KeyStroke("R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.XR.InputTracking.Recenter(); })
+#else
+                new KeyboardShortcut(new KeyStroke("R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.VR.InputTracking.Recenter(); })
+#endif
 
             });
         }
@@ -75,7 +93,6 @@ namespace VRMOD.Mode
 
         protected override void OnLevel(int level)
         {
-
             base.OnLevel(level);
             VRLog.Info("OnLevel");
             VRLog.Info($"Level:{level}");
@@ -89,15 +106,37 @@ namespace VRMOD.Mode
             float MONITOR_WIDTH_BASE = 1.92f * 0.025f;
             float MONITOR_HEIGHT_BASE = 1.08f * 0.025f;
 
+            VRLog.Info($"Create Virtual Desktop Monitor");
             monitor = GameObject.CreatePrimitive(PrimitiveType.Plane);
             monitor.name = "Monitor";
             monitor.transform.Reset();
             var renderer = monitor.GetComponent<MeshRenderer>();
 
-            // MaterialはuDD_Unlit/Texureとする.
+            // MaterialはuDD_Unlit/Texureとする.それがだめならFallbackする.
             if (renderer != null)
             {
+                VRLog.Info($"Material Change");
                 renderer.material = VR.Resource.MonitorMaterial;
+                VRLog.Info($"Material Name is {renderer.material}");
+                if (renderer.material.shader)
+                {
+                    VRLog.Info($"Shader Is : {renderer.material.shader.name}");
+                    VRLog.Info($"Shader Is Supported Status : {renderer.material.shader.isSupported}");
+
+                    if (renderer.material.shader.isSupported == false)
+                    {
+                        VRLog.Info("Fallback Shader Standard");
+                        var shader = Shader.Find("Standard");
+                        if (shader != null)
+                        {
+                            renderer.material.shader = shader;
+                        }
+                    }
+                }
+                else
+                {
+                    VRLog.Info($"Shader Can't load Check the Material Please...");
+                }
                 // 描画が反転するので、テクスチャーのスケールを反転させる.
                 renderer.material.mainTextureScale = new Vector3(-1.0f, 1.0f);
             }
@@ -113,6 +152,7 @@ namespace VRMOD.Mode
             monitor.transform.localScale = monitorSize;
 
             // デフォルトでは非表示にしておく.
+            VRLog.Info($"monitor Object Created Success:{monitor.name}");
             monitor.SetActive(false);
         }
 
@@ -123,7 +163,11 @@ namespace VRMOD.Mode
             monitor.transform.rotation = origin.transform.rotation;
 
             // モニタをHMDの向きに合わせて回転する.
-            monitor.transform.Rotate(InputTracking.GetLocalRotation(XRNode.Head).eulerAngles);
+#if UNITY_2018_3_OR_NEWER
+            monitor.transform.Rotate(UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.Head).eulerAngles);
+#else
+            monitor.transform.Rotate(UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.Head).eulerAngles);
+#endif
             // モニタの位置を設定値分オフセットする.
             monitor.transform.position += (monitor.transform.forward * VR.Settings.Distance);
 

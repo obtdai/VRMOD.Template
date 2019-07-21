@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using VRMOD.CoreModule;
 using UnityEngine;
-using UnityEngine.XR;
+
 
 namespace VRMOD.Mode
 {
@@ -12,7 +12,11 @@ namespace VRMOD.Mode
     {
         protected override void OnAwake()
         {
-            XRDevice.SetTrackingSpaceType(TrackingSpaceType.RoomScale);
+#if UNITY_2018_3_OR_NEWER
+            UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.RoomScale);
+#else
+            UnityEngine.VR.VRDevice.SetTrackingSpaceType(UnityEngine.VR.TrackingSpaceType.RoomScale);
+#endif
         }
 
         protected override void OnUpdate()

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
-using UnityEngine.XR;
 using VRGIN.Core;
 using VRMOD.Extension;
 
@@ -111,8 +110,11 @@ namespace VRMOD.CoreModule
         {
             // 自分自身の位置と回転を初期化.
             VRLog.Info("OnAWake");
-
-            XRSettings.showDeviceView = false;
+#if UNITY_2018_3_OR_NEWER
+            UnityEngine.XR.XRSettings.showDeviceView = false;
+#else
+            UnityEngine.VR.VRSettings.showDeviceView = false;
+#endif
             _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
 
             // VR用設定の更新.

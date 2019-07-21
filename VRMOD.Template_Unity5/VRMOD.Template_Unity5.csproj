@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BFDC617B-2407-4B38-BBFF-09ED9A1EA0DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VRMOD</RootNamespace>
+    <AssemblyName>VRMOD.Template</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UNITY5</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;UNITY_5_6_OR_NEWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IllusionPlugin">
+      <HintPath>..\Libs\IPA\IPA\Data\Managed\IllusionPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\VRMOD.Template\Libs\Unity5\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\VRMOD.Template\Libs\Unity5\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\VRMOD.Template\CoreModule\ControlMode.cs">
+      <Link>CoreModule\ControlMode.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\CoreModule\ResourceManager.cs">
+      <Link>CoreModule\ResourceManager.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\CoreModule\VRCamera.cs">
+      <Link>CoreModule\VRCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\CoreModule\VRManager.cs">
+      <Link>CoreModule\VRManager.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\CoreModule\VRSettings.cs">
+      <Link>CoreModule\VRSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Extension\ComponentExtension.cs">
+      <Link>Extension\ComponentExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Extension\GameObjectExtension.cs">
+      <Link>Extension\GameObjectExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Extension\TransformExtension.cs">
+      <Link>Extension\TransformExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Lib.cs">
+      <Link>Libs\uDesktopDuiplication\Lib.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Manager.cs">
+      <Link>Libs\uDesktopDuiplication\Manager.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Monitor.cs">
+      <Link>Libs\uDesktopDuiplication\Monitor.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Texture.cs">
+      <Link>Libs\uDesktopDuiplication\Texture.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Utility.cs">
+      <Link>Libs\uDesktopDuiplication\Utility.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\IShortcut.cs">
+      <Link>Libs\VRGIN\Controls\IShortcut.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\KeyboardShortcut.cs">
+      <Link>Libs\VRGIN\Controls\KeyboardShortcut.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Core\Logger.cs">
+      <Link>Libs\VRGIN\Core\Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Core\ProtectedBahaviour.cs">
+      <Link>Libs\VRGIN\Core\ProtectedBahaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Helpers\KeyStroke.cs">
+      <Link>Libs\VRGIN\Helpers\KeyStroke.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Mode\SeatedMode.cs">
+      <Link>Mode\SeatedMode.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Mode\StandingMode.cs">
+      <Link>Mode\StandingMode.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\VRPlugin.cs">
+      <Link>VRPlugin.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resource\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vrmod_5" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\IPA $(SolutionDir)$(OutDir)$(ProjectName)\
+copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

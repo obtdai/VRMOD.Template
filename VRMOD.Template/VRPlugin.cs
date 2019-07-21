@@ -4,7 +4,6 @@ using System.Collections;
 using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
-using UnityEngine.XR;
 using VRGIN.Core;
 using VRMOD.CoreModule;
 using VRMOD.Mode;
@@ -46,11 +45,32 @@ namespace VRMOD
             bool vrActivated = Environment.CommandLine.Contains("--vr");
 
             VRLog.Info("Start VRMOD");
-            if (vrActivated || (!vrDeactivated && XRSettings.isDeviceActive))
+
+#if UNITY_2018_3_OR_NEWER
+            foreach (var s in UnityEngine.XR.XRSettings.supportedDevices)
+            {
+                VRLog.Info($"Supported VR Device :{s}");
+            }
+            if (vrActivated || (!vrDeactivated && UnityEngine.XR.XRSettings.isDeviceActive))
             {
                 var Manager = VRManager.Create(VRSettings.Load<VRSettings>("VRSettings.xml"));
+                    Manager.SetMode<SeatedMode>();
+            }
+#else
+            foreach (var s in UnityEngine.VR.VRSettings.supportedDevices)
+            {
+                VRLog.Info($"Supported VR Device :{s}");
+            }
+            VRLog.Info($"VR Device Is Status:{UnityEngine.VR.VRSettings.isDeviceActive}");
+            VRLog.Info($"VR Mode Enabled Status:{UnityEngine.VR.VRSettings.enabled}");
+            if (vrActivated || (!vrDeactivated && UnityEngine.VR.VRSettings.isDeviceActive))
+            {
+                VRLog.Info("Create VR Manager");
+                var Manager = VRManager.Create(VRSettings.Load<VRSettings>("VRSettings.xml"));
+                VRLog.Info("VR Manager Created");
                 Manager.SetMode<SeatedMode>();
             }
+#endif
         }
 
         public void OnApplicationQuit() { }

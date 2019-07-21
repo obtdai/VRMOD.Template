@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using VRGIN.Core;
 
 namespace VRMOD.CoreModule
 {
@@ -26,11 +27,37 @@ namespace VRMOD.CoreModule
 
         private ResourceManager()
         {
+            VRLog.Info("Resource Manager Create");
             // AssetBundleのロード.
             _AssetBundle = AssetBundle.LoadFromMemory(AssetBundleMemory);
 
-            // モニタ表示用テクスチャを取得
-            _Materials.Add("uDD_Screen_Unlit", _AssetBundle.LoadAsset<Material>("uDD_Screen_Unlit.mat"));
+            if (_AssetBundle != null)
+            {
+                VRLog.Info("Asset Bundle is Loaded.");
+
+                LoadMaterials();
+            }
+            else
+            {
+                VRLog.Error("AssetBundle Load Failed.");
+            }
+
+        }
+
+        private void LoadMaterials()
+        {
+            // uDD_Screen_Unlit.mat
+            Material mat = _AssetBundle.LoadAsset<Material>("uDD_Screen_Unlit.mat");
+            if (mat != null)
+            {
+                VRLog.Info("Material uDD_Screen_Unlit.mat is Loaded.");
+                // モニタ表示用テクスチャを取得
+                _Materials.Add("uDD_Screen_Unlit", _AssetBundle.LoadAsset<Material>("uDD_Screen_Unlit.mat"));
+            }
+            else
+            {
+                VRLog.Error("Material uDD_Screen_Unlit.mat is Load Failed.");
+            }
         }
 
         public Material MonitorMaterial
@@ -46,7 +73,11 @@ namespace VRMOD.CoreModule
             get
             {
                 // Unityバージョンにより切り替え.
+#if UNITY_5_6_OR_NEWER
+                return Properties.Resources.vrmod_5;
+#elif UNITY_2018_3_OR_NEWER
                 return Properties.Resources.vrmod_2018_3;
+#endif
             }
         }
 

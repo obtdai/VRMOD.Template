@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.XR;
 using VRGIN.Core;
 using VRMOD.Extension;
 
@@ -33,17 +32,24 @@ namespace VRMOD.CoreModule
 
         protected override void OnAwake()
         {
+            VRLog.Info("OnAWake");
             transform.Reset();
 
+            VRLog.Info("Create Eye Object");
             eye = new GameObject("eye");
             eye.transform.Reset();
             eye.transform.SetParent(transform, false);
             eye.AddComponent<AudioListener>();
+            VRLog.Info("Add Camera Component");
             var camera = eye.AddComponent<Camera>();
             // VR用の設定を反映.
             camera.stereoTargetEye = StereoTargetEyeMask.Both;
             camera.nearClipPlane = VR.Settings.NearClipPlane;
-            XRSettings.eyeTextureResolutionScale = VR.Settings.IPDScale;
+#if UNITY_2018_3_OR_NEWER
+            UnityEngine.XR.XRSettings.eyeTextureResolutionScale = VR.Settings.IPDScale;
+#else
+            UnityEngine.VR.VRSettings.renderScale = VR.Settings.IPDScale;
+#endif
 
             DontDestroyOnLoad(gameObject);
         }

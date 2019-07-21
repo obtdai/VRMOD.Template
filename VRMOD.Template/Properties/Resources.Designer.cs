@@ -59,5 +59,15 @@ namespace VRMOD.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   型 System.Byte[] のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static byte[] vrmod_2018_3 {
+            get {
+                object obj = ResourceManager.GetObject("vrmod_2018_3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

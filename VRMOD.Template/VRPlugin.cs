@@ -48,7 +48,7 @@ namespace VRMOD
             VRLog.Info("Start VRMOD");
             if (vrActivated || (!vrDeactivated && XRSettings.isDeviceActive))
             {
-                var Manager = VRManager.Create();
+                var Manager = VRManager.Create(VRSettings.Load<VRSettings>("VRSettings.xml"));
                 Manager.SetMode<SeatedMode>();
             }
         }

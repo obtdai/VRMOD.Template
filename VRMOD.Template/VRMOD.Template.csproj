@@ -64,8 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreModule\ControlMode.cs" />
+    <Compile Include="CoreModule\ResourceManager.cs" />
     <Compile Include="CoreModule\VRCamera.cs" />
     <Compile Include="CoreModule\VRManager.cs" />
+    <Compile Include="CoreModule\VRSettings.cs" />
     <Compile Include="Extension\ComponentExtension.cs" />
     <Compile Include="Extension\GameObjectExtension.cs" />
     <Compile Include="Extension\TransformExtension.cs" />
@@ -74,8 +76,11 @@
     <Compile Include="Libs\uDesktopDuiplication\Monitor.cs" />
     <Compile Include="Libs\uDesktopDuiplication\Texture.cs" />
     <Compile Include="Libs\uDesktopDuiplication\Utility.cs" />
+    <Compile Include="Libs\VRGIN\Controls\IShortcut.cs" />
+    <Compile Include="Libs\VRGIN\Controls\KeyboardShortcut.cs" />
     <Compile Include="Libs\VRGIN\Core\Logger.cs" />
     <Compile Include="Libs\VRGIN\Core\ProtectedBahaviour.cs" />
+    <Compile Include="Libs\VRGIN\Helpers\KeyStroke.cs" />
     <Compile Include="Mode\SeatedMode.cs" />
     <Compile Include="Mode\StandingMode.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -92,7 +97,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resource\Unity2018.3\vrmod_2018_3" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /y $(TargetPath) E:\PlayDisc\06_VR\yami_v1.0.2_VRMOD\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>

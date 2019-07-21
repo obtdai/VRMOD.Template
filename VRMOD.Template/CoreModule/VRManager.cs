@@ -11,9 +11,29 @@ using VRMOD.Extension;
 
 namespace VRMOD.CoreModule
 {
-    class VRManager : ProtectedBehaviour
+    /// <summary>
+    /// Helper class that gives you easy access to all crucial objects.
+    /// </summary>
+    public static class VR
+    {
+        public static VRCamera Camera { get { return VRCamera.Instance; } }
+        public static ControlMode Mode { get { return VRManager.Instance.Mode; } }
+        public static VRSettings Settings { get { return VRManager.Settings; } }
+        public static Shortcuts Shortcuts { get { return VRManager.Settings.Shortcuts; } }
+        public static VRManager Manager { get { return VRManager.Instance; } }
+
+        public static ResourceManager Resource { get { return ResourceManager.Instance; } }
+
+        public static uDesktopDuplication.Manager MonitorManager { get { return VRManager.MonitorManager; } }
+        public static bool Active { get; set; }
+    }
+
+    public class VRManager : ProtectedBehaviour
     {
         private static VRManager _Instance;
+        private static VRSettings _Settings;
+
+        private static uDesktopDuplication.Manager _MonitorManager;
         public VRCamera Camera
         {
             get { return VRCamera.Instance; }
@@ -25,13 +45,37 @@ namespace VRMOD.CoreModule
             private set;
         }
 
+        public static VRSettings Settings
+        {
+            get {
+                if (_Settings == null)
+                {
+                    throw new InvalidOperationException("VR Settings has not been created yet!");
+                }
+                return _Settings;
+            }
+        }
+        
+        public static uDesktopDuplication.Manager MonitorManager
+        {
+            get
+            {
+                if (_MonitorManager == null)
+                {
+                    _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
+                }
+                return _MonitorManager;
+            }
+        }
+
         private HashSet<Camera> _CheckedCameras = new HashSet<Camera>();
 
-        public static VRManager Create()
+        public static VRManager Create(VRSettings settings)
         {
             if (_Instance == null)
             {
                 _Instance = new GameObject("VRManager").AddComponent<VRManager>();
+                _Settings = settings;
             }
             return _Instance;
 
@@ -69,6 +113,10 @@ namespace VRMOD.CoreModule
             VRLog.Info("OnAWake");
 
             XRSettings.showDeviceView = false;
+            _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
+
+            // VR用設定の更新.
+
             DontDestroyOnLoad(gameObject);
         }
         protected override void OnStart()

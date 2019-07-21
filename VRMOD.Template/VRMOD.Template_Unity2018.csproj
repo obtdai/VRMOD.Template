@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IllusionPlugin">
-      <HintPath>..\Libs\IPA\IPA\Data\Managed\IllusionPlugin.dll</HintPath>
+      <HintPath>..\Libs\VRMOD.Template_2018\IPA\Data\Managed\IllusionPlugin.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -104,7 +104,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\IPA $(SolutionDir)$(OutDir)$(ProjectName)\
+    <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\$(ProjectName) $(SolutionDir)$(OutDir)$(ProjectName)\
 copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>
   </PropertyGroup>
 </Project>

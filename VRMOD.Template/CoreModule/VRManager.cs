@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
+using VRMOD.Mode;
 using VRGIN.Core;
 using VRMOD.Extension;
 
@@ -24,6 +25,8 @@ namespace VRMOD.CoreModule
         public static ResourceManager Resource { get { return ResourceManager.Instance; } }
 
         public static uDesktopDuplication.Manager MonitorManager { get { return VRManager.MonitorManager; } }
+
+        public static uTouchInjection.Manager TouchManager { get { return VRManager.TouchManager; } }
         public static bool Active { get; set; }
     }
 
@@ -33,6 +36,8 @@ namespace VRMOD.CoreModule
         private static VRSettings _Settings;
 
         private static uDesktopDuplication.Manager _MonitorManager;
+
+        private static uTouchInjection.Manager _TouchManager;
         public VRCamera Camera
         {
             get { return VRCamera.Instance; }
@@ -64,6 +69,18 @@ namespace VRMOD.CoreModule
                     _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
                 }
                 return _MonitorManager;
+            }
+        }
+
+        public static uTouchInjection.Manager TouchManager
+        {
+            get
+            {
+                if (_TouchManager == null)
+                {
+                    _TouchManager = uTouchInjection.Manager.CreateInstance();
+                }
+                return _TouchManager;
             }
         }
 
@@ -116,6 +133,8 @@ namespace VRMOD.CoreModule
             UnityEngine.VR.VRSettings.showDeviceView = false;
 #endif
             _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
+
+            _TouchManager = uTouchInjection.Manager.CreateInstance();
 
             // VR用設定の更新.
 

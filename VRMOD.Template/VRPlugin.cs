@@ -53,8 +53,10 @@ namespace VRMOD
             }
             if (vrActivated || (!vrDeactivated && UnityEngine.XR.XRSettings.isDeviceActive))
             {
+                VRLog.Info("Create VR Manager");
                 var Manager = VRManager.Create(VRSettings.Load<VRSettings>("VRSettings.xml"));
-                    Manager.SetMode<SeatedMode>();
+                VRLog.Info("VR Manager Created");
+                Manager.SetMode<StandingMode>();
             }
 #else
             foreach (var s in UnityEngine.VR.VRSettings.supportedDevices)

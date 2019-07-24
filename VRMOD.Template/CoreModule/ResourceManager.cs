@@ -52,11 +52,29 @@ namespace VRMOD.CoreModule
             {
                 VRLog.Info("Material uDD_Screen_Unlit.mat is Loaded.");
                 // モニタ表示用テクスチャを取得
-                _Materials.Add("uDD_Screen_Unlit", _AssetBundle.LoadAsset<Material>("uDD_Screen_Unlit.mat"));
+                _Materials.Add("uDD_Screen_Unlit", mat);
             }
             else
             {
                 VRLog.Error("Material uDD_Screen_Unlit.mat is Load Failed.");
+            }
+
+            // uTI_Cursor.mat
+            mat = null;
+            mat = _AssetBundle.LoadAsset<Material>("uTI_Cursor.mat");
+            if (mat != null)
+            {
+                VRLog.Info("Material uTI_Cursor.mat is Loaded.");
+                _Materials.Add("uTI_Cursor", mat);
+            }
+
+            // uTI_Ray.mat
+            mat = null;
+            mat = _AssetBundle.LoadAsset<Material>("uTI_Ray.mat");
+            if (mat != null)
+            {
+                VRLog.Info("Material uTI_Cursor.mat is Loaded.");
+                _Materials.Add("uTI_Ray", mat);
             }
         }
 
@@ -68,6 +86,21 @@ namespace VRMOD.CoreModule
             }
         }
 
+        public Material TouchCursorMaterial
+        {
+            get
+            {
+                return _Materials["uTI_Cursor"];
+            }
+        }
+
+        public Material TouchRayMaterial
+        {
+            get
+            {
+                return _Materials["uTI_Ray"];
+            }
+        }
         private byte[] AssetBundleMemory
         {
             get

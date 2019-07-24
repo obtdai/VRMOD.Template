@@ -63,7 +63,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreModule\ControlMode.cs" />
+    <Compile Include="CoreModule\DesktopMonitor.cs" />
+    <Compile Include="InputEmulator\TouchEmulator.cs" />
+    <Compile Include="InputEmulator\TouchPointerDrawer.cs" />
+    <Compile Include="Libs\uTouchInjection\Lib.cs" />
+    <Compile Include="Libs\uTouchInjection\Manager.cs" />
+    <Compile Include="Libs\uTouchInjection\Pointer.cs" />
+    <Compile Include="Libs\VRGIN\Controls\LeftController.cs" />
+    <Compile Include="Libs\VRGIN\Controls\RightController.cs" />
+    <Compile Include="Mode\ControlMode.cs" />
     <Compile Include="CoreModule\ResourceManager.cs" />
     <Compile Include="CoreModule\VRCamera.cs" />
     <Compile Include="CoreModule\VRManager.cs" />
@@ -76,6 +84,7 @@
     <Compile Include="Libs\uDesktopDuiplication\Monitor.cs" />
     <Compile Include="Libs\uDesktopDuiplication\Texture.cs" />
     <Compile Include="Libs\uDesktopDuiplication\Utility.cs" />
+    <Compile Include="Libs\VRGIN\Controls\Controller.cs" />
     <Compile Include="Libs\VRGIN\Controls\IShortcut.cs" />
     <Compile Include="Libs\VRGIN\Controls\KeyboardShortcut.cs" />
     <Compile Include="Libs\VRGIN\Core\Logger.cs" />
@@ -105,6 +114,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\$(ProjectName) $(SolutionDir)$(OutDir)$(ProjectName)\
-copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>
+copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)
+
+copy /y $(TargetPath) E:\PlayDisc\06_VR\yami_v1.0.2_VRMOD\Plugins\VRMOD.Template.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

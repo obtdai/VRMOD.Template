@@ -51,9 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\VRMOD.Template\CoreModule\ControlMode.cs">
-      <Link>CoreModule\ControlMode.cs</Link>
-    </Compile>
     <Compile Include="..\VRMOD.Template\CoreModule\ResourceManager.cs">
       <Link>CoreModule\ResourceManager.cs</Link>
     </Compile>
@@ -90,6 +87,9 @@
     <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Utility.cs">
       <Link>Libs\uDesktopDuiplication\Utility.cs</Link>
     </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\Controller.cs">
+      <Link>Libs\VRGIN\Controls\Controller.cs</Link>
+    </Compile>
     <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\IShortcut.cs">
       <Link>Libs\VRGIN\Controls\IShortcut.cs</Link>
     </Compile>
@@ -104,6 +104,9 @@
     </Compile>
     <Compile Include="..\VRMOD.Template\Libs\VRGIN\Helpers\KeyStroke.cs">
       <Link>Libs\VRGIN\Helpers\KeyStroke.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Mode\ControlMode.cs">
+      <Link>Mode\ControlMode.cs</Link>
     </Compile>
     <Compile Include="..\VRMOD.Template\Mode\SeatedMode.cs">
       <Link>Mode\SeatedMode.cs</Link>
@@ -121,9 +124,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resource\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -131,7 +132,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\vrmod_5" />
+    <None Include="..\VRMOD.Template\Resource\vrmod_2018_3">
+      <Link>Resource\vrmod_2018_3</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

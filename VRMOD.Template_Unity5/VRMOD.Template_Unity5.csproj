@@ -51,6 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VRMOD.Template\CoreModule\DesktopMonitor.cs">
+      <Link>CoreModule\DesktopMonitor.cs</Link>
+    </Compile>
     <Compile Include="..\VRMOD.Template\CoreModule\ResourceManager.cs">
       <Link>CoreModule\ResourceManager.cs</Link>
     </Compile>
@@ -72,6 +75,12 @@
     <Compile Include="..\VRMOD.Template\Extension\TransformExtension.cs">
       <Link>Extension\TransformExtension.cs</Link>
     </Compile>
+    <Compile Include="..\VRMOD.Template\InputEmulator\TouchEmulator.cs">
+      <Link>InputEmulator\TouchEmulator.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\InputEmulator\TouchPointerDrawer.cs">
+      <Link>InputEmulator\TouchPointerDrawer.cs</Link>
+    </Compile>
     <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Lib.cs">
       <Link>Libs\uDesktopDuiplication\Lib.cs</Link>
     </Compile>
@@ -87,6 +96,15 @@
     <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Utility.cs">
       <Link>Libs\uDesktopDuiplication\Utility.cs</Link>
     </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uTouchInjection\Lib.cs">
+      <Link>Libs\uTouchInjection\Lib.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uTouchInjection\Manager.cs">
+      <Link>Libs\uTouchInjection\Manager.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\uTouchInjection\Pointer.cs">
+      <Link>Libs\uTouchInjection\Pointer.cs</Link>
+    </Compile>
     <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\Controller.cs">
       <Link>Libs\VRGIN\Controls\Controller.cs</Link>
     </Compile>
@@ -95,6 +113,12 @@
     </Compile>
     <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\KeyboardShortcut.cs">
       <Link>Libs\VRGIN\Controls\KeyboardShortcut.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\LeftController.cs">
+      <Link>Libs\VRGIN\Controls\LeftController.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\RightController.cs">
+      <Link>Libs\VRGIN\Controls\RightController.cs</Link>
     </Compile>
     <Compile Include="..\VRMOD.Template\Libs\VRGIN\Core\Logger.cs">
       <Link>Libs\VRGIN\Core\Logger.cs</Link>

@@ -32,8 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IllusionPlugin">
-      <HintPath>..\Libs\VRMOD.Template_2018\IPA\Data\Managed\IllusionPlugin.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\Libs\VRMOD.Template_Unity2018\IPA\Data\Managed\IllusionPlugin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +50,10 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>Libs\Unity2018.3\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>Libs\Unity2018.3\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VRModule">
@@ -115,7 +118,6 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\$(ProjectName) $(SolutionDir)$(OutDir)$(ProjectName)\
 copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)
-
-copy /y $(TargetPath) E:\PlayDisc\06_VR\yami_v1.0.2_VRMOD\Plugins\VRMOD.Template.dll</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

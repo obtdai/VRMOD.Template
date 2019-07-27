@@ -26,7 +26,7 @@ namespace VRMOD.Mode
 #else
             UnityEngine.VR.VRDevice.SetTrackingSpaceType(UnityEngine.VR.TrackingSpaceType.Stationary);
 #endif
-            monitor = DesktopMonitor.Create();
+            monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.Stationary);
             MoveMonitor(VR.Camera.transform);
         }
 
@@ -101,7 +101,7 @@ namespace VRMOD.Mode
             VRLog.Info("OnLevel");
             VRLog.Info($"Level:{level}");
 
-            monitor = DesktopMonitor.Create();
+            monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.Stationary);
             MoveMonitor(VR.Camera.transform);
         }
 
@@ -124,7 +124,7 @@ namespace VRMOD.Mode
 
             // モニタから原点を見る.
             monitor.transform.LookAt(origin);
-            monitor.transform.Rotate(new Vector3(-90.0f, 180.0f, 0.0f));
+            monitor.transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f));
 
         }
     }

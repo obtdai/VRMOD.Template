@@ -49,10 +49,10 @@ namespace VRMOD.InputEmulator
             // PointerDrawerを追加
             VRLog.Info("Add Pointer Drawer");
             var drawer = touchEmulator.AddComponent<TouchPointerDrawer>();
-
-#if false
+#if true
             GameObject cursor = GameObject.CreatePrimitive(PrimitiveType.Quad);
             cursor.transform.Reset();
+            cursor.transform.localScale *= 0.01f;
             cursor.transform.SetParent(touchEmulator.transform);
             var cursorRenderer = cursor.GetComponent<Renderer>();
             
@@ -82,6 +82,7 @@ namespace VRMOD.InputEmulator
                     VRLog.Info($"Shader Can't load Check the Material Please...");
                 }
             }
+            drawer.cursor = cursor;
 #endif
             return result;
         }
@@ -166,7 +167,6 @@ namespace VRMOD.InputEmulator
 
             if (result.hit)
             {
-                VRLog.Info($"Where hit {result.desktopCoord}");
                 if (isFirstTouch_)
                 {
                     filteredDesktopCoord = result.desktopCoord;
@@ -194,7 +194,17 @@ namespace VRMOD.InputEmulator
                 case State.Release:
                     if (controller.TriggerDown)
                     {
-                        VRLog.Info("Touch Start");
+                        StartTouch();
+                    }
+                    else
+                    {
+                        StartHover();
+                    }
+                    break;
+                case State.Hover:
+                    Hover();
+                    if (controller.TriggerDown)
+                    {
                         StartTouch();
                     }
                     break;
@@ -202,12 +212,8 @@ namespace VRMOD.InputEmulator
                     Touch();
                     if (controller.TriggerUp)
                     {
-                        VRLog.Info("Touch End");
                         StartRelease();
                     }
-                    break;
-                default:
-                    StartRelease();
                     break;
             }
         }

@@ -12,7 +12,7 @@ namespace VRMOD.InputEmulator
         TouchEmulator dispatcher_;
         LineRenderer line_;
 
-        [SerializeField] GameObject cursor;
+        public GameObject cursor { private get; set; }
         [SerializeField] float nonHitAlpha = 0.2f;
         [SerializeField] float hitAlpha = 0.5f;
         [SerializeField] Color releaseColor = new Color(0.5f, 0.5f, 0.5f);
@@ -27,6 +27,8 @@ namespace VRMOD.InputEmulator
             VRLog.Info("OnStart");
             dispatcher_ = GetComponent<TouchEmulator>();
             line_ = GetComponent<LineRenderer>();
+            line_.startWidth = 0.005f;
+            line_.endWidth = 0.005f;
         }
 
         protected override void OnUpdate()
@@ -61,7 +63,6 @@ namespace VRMOD.InputEmulator
             {
                 line_.SetPosition(1, transform.position + transform.forward * 0.5f);
             }
-
             line_.startColor = color_;
             line_.endColor = color_;
         }

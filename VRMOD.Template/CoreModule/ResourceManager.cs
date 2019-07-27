@@ -12,6 +12,7 @@ namespace VRMOD.CoreModule
     {
         private static ResourceManager _Instance;
         private Dictionary<string, Material> _Materials = new Dictionary<string, Material>();
+        private Dictionary<string, Mesh> _Meshes = new Dictionary<string, Mesh>();
 
         public static ResourceManager Instance
         {
@@ -34,8 +35,10 @@ namespace VRMOD.CoreModule
             if (_AssetBundle != null)
             {
                 VRLog.Info("Asset Bundle is Loaded.");
-
                 LoadMaterials();
+                WarmUpShader();
+                LoadMeshes();
+
             }
             else
             {
@@ -44,6 +47,29 @@ namespace VRMOD.CoreModule
 
         }
 
+        private void LoadMeshes()
+        {
+            
+            Mesh mesh = _AssetBundle.LoadAsset<Mesh>("uDD_Board");
+
+            if (mesh != null)
+            {
+                VRLog.Info("Mesh uDD_Board.fbx is Loaded.");
+                _Meshes.Add("uDD_Board", mesh);
+            }
+            else
+            {
+                VRLog.Error("Mesh uDD_Board.fbx is Loaded Failed.");
+            }
+        }
+
+        private void WarmUpShader()
+        {
+            VRLog.Info("Warm up all shaders");
+            Shader.WarmupAllShaders();
+
+            return;
+        }
         private void LoadMaterials()
         {
             // uDD_Screen_Unlit.mat
@@ -51,6 +77,9 @@ namespace VRMOD.CoreModule
             if (mat != null)
             {
                 VRLog.Info("Material uDD_Screen_Unlit.mat is Loaded.");
+                mat.SetInt("_Forward", 1);
+                mat.DisableKeyword("_FORWARD_Y");
+                mat.EnableKeyword("_FORWARD_Z");
                 // モニタ表示用テクスチャを取得
                 _Materials.Add("uDD_Screen_Unlit", mat);
             }
@@ -73,7 +102,7 @@ namespace VRMOD.CoreModule
             mat = _AssetBundle.LoadAsset<Material>("uTI_Ray.mat");
             if (mat != null)
             {
-                VRLog.Info("Material uTI_Cursor.mat is Loaded.");
+                VRLog.Info("Material uTI_Ray.mat is Loaded.");
                 _Materials.Add("uTI_Ray", mat);
             }
         }
@@ -101,6 +130,18 @@ namespace VRMOD.CoreModule
                 return _Materials["uTI_Ray"];
             }
         }
+
+        public Mesh MonitorMesh
+        {
+            get
+            {
+                return _Meshes["uDD_Board"];
+            }
+        }
+
+
+
+
         private byte[] AssetBundleMemory
         {
             get

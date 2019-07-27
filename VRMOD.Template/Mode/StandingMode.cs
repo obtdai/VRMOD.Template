@@ -26,7 +26,7 @@ namespace VRMOD.Mode
         {
             VRLog.Info("OnAWake()");
             base.OnAwake();
-            Monitor = DesktopMonitor.Create();
+            Monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.RoomScale);
             Emulator = TouchEmulator.Create();
             Emulator.transform.SetParent(Right.transform);
 #if UNITY_2018_3_OR_NEWER
@@ -108,7 +108,7 @@ namespace VRMOD.Mode
             else
             {
                 VRLog.Info("Monitor Destroyed Recreated Yet");
-                Monitor = DesktopMonitor.Create();
+                Monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.RoomScale);
             }
         }
         private void GripMoveLeft()

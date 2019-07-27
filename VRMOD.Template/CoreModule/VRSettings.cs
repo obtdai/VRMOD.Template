@@ -35,7 +35,7 @@ namespace VRMOD.CoreModule
         /// </summary>
         [XmlComment("The distance between the camera and the GUI at [0,0,0] [seated]")]
         public float Distance { get { return _Distance; } set { _Distance = Mathf.Clamp(value, 0.1f, 10f); TriggerPropertyChanged("Distance"); } }
-        private float _Distance = 0.5f;
+        private float _Distance = 3.0f;
 
         /// <summary>
         /// Show Monitor Scale. [seated]

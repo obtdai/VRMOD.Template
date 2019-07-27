@@ -56,7 +56,7 @@ namespace VRMOD
                 VRLog.Info("Create VR Manager");
                 var Manager = VRManager.Create(VRSettings.Load<VRSettings>("VRSettings.xml"));
                 VRLog.Info("VR Manager Created");
-                Manager.SetMode<StandingMode>();
+                Manager.SetMode<SeatedMode>();
             }
 #else
             foreach (var s in UnityEngine.VR.VRSettings.supportedDevices)

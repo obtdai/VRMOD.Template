@@ -54,10 +54,15 @@ namespace VRMOD.CoreModule
             DontDestroyOnLoad(gameObject);
         }
 
-        public void SyncCamera(Transform t)
+        public void SyncCamera(Transform t, Vector3 positionOffset)
         {
-            transform.position = t.position;
+            transform.position = (t.position + positionOffset);
             transform.rotation = t.rotation;
+        }
+
+        public void SyncCameraPosition(Vector3 position)
+        {
+            transform.position = position;
         }
 
         public void CopyFX(Camera source)

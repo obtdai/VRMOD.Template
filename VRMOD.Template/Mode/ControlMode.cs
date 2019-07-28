@@ -6,6 +6,7 @@ using UnityEngine;
 using VRMOD.CoreModule;
 using VRGIN.Core;
 using VRGIN.Controls;
+using VRMOD.Extension;
 
 
 namespace VRMOD.Mode
@@ -20,7 +21,7 @@ namespace VRMOD.Mode
         {
             VRLog.Info("OnAWake");
             base.OnAwake();
-            CreateControllers();
+
 
             return;
         }
@@ -28,7 +29,9 @@ namespace VRMOD.Mode
         {
             VRLog.Info("OnStart");
             base.OnStart();
+            CreateControllers();
             Shortcuts = CreateShortcuts();
+            VR.Camera.transform.Reset();
         }
 
         protected virtual IEnumerable<IShortcut> CreateShortcuts()
@@ -63,6 +66,7 @@ namespace VRMOD.Mode
  
         protected virtual void OnDestroy()
         {
+            VRLog.Info("On Destroy");
             DestroyImmediate(Left.gameObject);
             DestroyImmediate(Right.gameObject);
 

@@ -41,23 +41,33 @@ namespace VRMOD.Mode
         {
             return base.CreateShortcuts().Concat(new IShortcut[] {
                 new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+C"), () => { VRLog.Info("Mode Change to Standing Mode"); VR.Manager.SetMode<StandingMode>(); }),
-                new KeyboardShortcut(new KeyStroke("Space"), () => {
-                    if (monitor.activeSelf)
+                new KeyboardShortcut(new KeyStroke("Ctrl+Space"), () => {
+                    if (monitor != null)
                     {
-                        monitor.SetActive(false);
-                        VRLog.Info("Monitor inactive");
+
+                        if (monitor.activeSelf)
+                        {
+                            monitor.SetActive(false);
+                            VRLog.Info("Monitor inactive");
+                        }
+                        else
+                        {
+                            MoveMonitor(VR.Camera.transform);
+                            monitor.SetActive(true);
+                            VRLog.Info($"Monitor active, show position is {monitor.transform.position}");
+                        }
                     }
                     else
                     {
-                        MoveMonitor(VR.Camera.transform);
-                        monitor.SetActive(true);
-                        VRLog.Info($"Monitor active, show position is {monitor.transform.position}");
+                        VRLog.Info($"Monitor is Destroyed, Recreated Yet");
+                        monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.Stationary);
+
                     }
                 }),
 #if UNITY_2018_3_OR_NEWER
-                new KeyboardShortcut(new KeyStroke("R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.XR.InputTracking.Recenter(); })
+                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.XR.InputTracking.Recenter(); })
 #else
-                new KeyboardShortcut(new KeyStroke("R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.VR.InputTracking.Recenter(); })
+                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.VR.InputTracking.Recenter(); })
 #endif
 
             });
@@ -78,6 +88,7 @@ namespace VRMOD.Mode
         {
             VRLog.Info("On Destroy");
             DestroyImmediate(monitor.gameObject);
+            base.OnDestroy();
 
             return;
         }
@@ -88,7 +99,7 @@ namespace VRMOD.Mode
             // sync camerapos
             if (syncCamera != null)
             {
-                VRManager.Instance.Camera.SyncCamera(syncCamera.transform);
+                VRManager.Instance.Camera.SyncCamera(syncCamera.transform, Vector3.zero);
             }
             else
             {

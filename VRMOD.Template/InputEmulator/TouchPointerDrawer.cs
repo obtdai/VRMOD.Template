@@ -27,8 +27,8 @@ namespace VRMOD.InputEmulator
             VRLog.Info("OnStart");
             dispatcher_ = GetComponent<TouchEmulator>();
             line_ = GetComponent<LineRenderer>();
-            line_.startWidth = 0.005f;
-            line_.endWidth = 0.005f;
+            line_.startWidth = 0.01f;
+            line_.endWidth = 0.01f;
         }
 
         protected override void OnUpdate()

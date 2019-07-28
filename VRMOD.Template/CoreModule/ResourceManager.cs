@@ -88,6 +88,22 @@ namespace VRMOD.CoreModule
                 VRLog.Error("Material uDD_Screen_Unlit.mat is Load Failed.");
             }
 
+            // uDD_Screen_Standard.mat
+            mat = _AssetBundle.LoadAsset<Material>("uDD_Screen_Standard.mat");
+            if (mat != null)
+            {
+                VRLog.Info("Material uDD_Screen_Standard.mat is Loaded.");
+                mat.SetInt("_Forward", 1);
+                mat.DisableKeyword("_FORWARD_Y");
+                mat.EnableKeyword("_FORWARD_Z");
+                // モニタ表示用テクスチャを取得
+                _Materials.Add("uDD_Screen_Standard", mat);
+            }
+            else
+            {
+                VRLog.Error("Material uDD_Screen_Unlit.mat is Load Failed.");
+            }
+
             // uTI_Cursor.mat
             mat = null;
             mat = _AssetBundle.LoadAsset<Material>("uTI_Cursor.mat");
@@ -111,7 +127,23 @@ namespace VRMOD.CoreModule
         {
             get
             {
-                return _Materials["uDD_Screen_Unlit"];
+                if (_Materials.ContainsKey("uDD_Screen_Unlit"))
+                {
+                    return _Materials["uDD_Screen_Unlit"];
+                }
+                return null;
+            }
+        }
+
+        public Material MonitorStandardMaterial
+        {
+            get
+            {
+                if (_Materials.ContainsKey("uDD_Screen_Standard"))
+                {
+                    return _Materials["uDD_Screen_Standard"];
+                }
+                return null;
             }
         }
 
@@ -119,7 +151,11 @@ namespace VRMOD.CoreModule
         {
             get
             {
-                return _Materials["uTI_Cursor"];
+                if (_Materials.ContainsKey("uTI_Cursor"))
+                {
+                    return _Materials["uTI_Cursor"];
+                }
+                return null;
             }
         }
 
@@ -127,7 +163,11 @@ namespace VRMOD.CoreModule
         {
             get
             {
-                return _Materials["uTI_Ray"];
+                if (_Materials.ContainsKey("uTI_Ray"))
+                {
+                    return _Materials["uTI_Ray"];
+                }
+                return null;
             }
         }
 
@@ -135,7 +175,11 @@ namespace VRMOD.CoreModule
         {
             get
             {
-                return _Meshes["uDD_Board"];
+                if (_Meshes.ContainsKey("uDD_Board"))
+                {
+                    return _Meshes["uDD_Board"];
+                }
+                return null;
             }
         }
 

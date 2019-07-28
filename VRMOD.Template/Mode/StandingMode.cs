@@ -24,28 +24,33 @@ namespace VRMOD.Mode
         private Quaternion beforeRightControllerRotation;
         protected override void OnAwake()
         {
-            VRLog.Info("OnAWake()");
             base.OnAwake();
-            Monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.RoomScale);
-            Emulator = TouchEmulator.Create();
-            Emulator.transform.SetParent(Right.transform);
-#if UNITY_2018_3_OR_NEWER
-            UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.RoomScale);
-#else
-            UnityEngine.VR.VRDevice.SetTrackingSpaceType(UnityEngine.VR.TrackingSpaceType.RoomScale);
-#endif
         }
 
         protected override IEnumerable<IShortcut> CreateShortcuts()
         {
             return base.CreateShortcuts().Concat(new IShortcut[] {
                 new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+C"), () => { VRLog.Info("Mode Change to Seated Mode"); VR.Manager.SetMode<SeatedMode>(); }),
+                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+S"), () => {  VRLog.Info("Camera Position Sync Main Camera"); SyncCameraForRoomScale(); }),
+                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+R"), () => { VRLog.Info("Camera Position Reset to {0, 0, 0}"); VR.Camera.transform.Reset(); }),
             });
         }
 
         protected override void OnStart()
         {
             base.OnStart();
+
+            VRLog.Info("OnStart()");
+#if UNITY_2018_3_OR_NEWER
+            UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.RoomScale);
+#else
+            UnityEngine.VR.VRDevice.SetTrackingSpaceType(UnityEngine.VR.TrackingSpaceType.RoomScale);
+#endif
+
+            Monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.RoomScale);
+            Emulator = TouchEmulator.Create();
+            Emulator.transform.SetParent(Right.transform, false);
+            SyncCameraForRoomScale();
         }
 
         protected override void OnLevel(int level)
@@ -61,16 +66,38 @@ namespace VRMOD.Mode
             GripMoveLeft();
             GripMoveRight();
             MonitorDisplayChange();
+            ReSyncCamera();
 
         }
 
         protected override void OnDestroy()
         {
             VRLog.Info("On Destroy");
+            DestroyImmediate(Emulator.gameObject);
             DestroyImmediate(Monitor.gameObject);
+            base.OnDestroy();
             return;
         }
 
+        private void ReSyncCamera()
+        {
+            // 右コントローラーのトラックパッドボタン押下でカメラを再同期.
+            if (Right.TrackpadButtonDown)
+            {
+                SyncCameraForRoomScale();
+            }
+        }
+
+        private void SyncCameraForRoomScale()
+        {
+            if (Camera.main != null)
+            {
+                Vector3 pos = Camera.main.transform.position;
+                pos.y = Camera.main.transform.position.y - VR.Camera.transform.position.y;
+                VR.Camera.SyncCameraPosition(pos);
+            }
+
+        }
         private void MonitorDisplayChange()
         {
             // モニタをメニューボタンを押下した側に移動するか、関連付け中にメニューボタンを押したら表示／非表示を切り替える.

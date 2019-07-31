@@ -22,15 +22,26 @@ namespace VRMOD.Mode
         private Quaternion beforeLeftControllerRotation;
         private Vector3 beforeRightControllerPosition;
         private Quaternion beforeRightControllerRotation;
+
+        public override ModeType Mode
+        {
+            get { return ModeType.StandingMode; }
+        }
         protected override void OnAwake()
         {
+            VRLog.Info("OnAwake");
             base.OnAwake();
+            VR.Render.trackingSpace = Valve.VR.ETrackingUniverseOrigin.TrackingUniverseSeated;
+            VR.Camera.Origin.transform.Reset();
+            Monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.RoomScale);
+            Emulator = TouchEmulator.Create();
+            Emulator.transform.SetParent(Right.transform, false);
         }
 
         protected override IEnumerable<IShortcut> CreateShortcuts()
         {
             return base.CreateShortcuts().Concat(new IShortcut[] {
-                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+C"), () => { VRLog.Info("Mode Change to Seated Mode"); VR.Manager.SetMode<SeatedMode>(); }),
+                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+C"), () => { VRLog.Info("Mode Change to Seated Mode"); VR.Manager.SetMode(ModeType.SeatedMode); }),
                 new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+S"), () => {  VRLog.Info("Camera Position Sync Main Camera"); SyncCameraForRoomScale(); }),
                 new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+R"), () => { VRLog.Info("Camera Position Reset to {0, 0, 0}"); VR.Camera.transform.Reset(); }),
             });
@@ -40,17 +51,7 @@ namespace VRMOD.Mode
         {
             base.OnStart();
 
-            VRLog.Info("OnStart()");
-#if UNITY_2018_3_OR_NEWER
-            UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.RoomScale);
-#else
-            UnityEngine.VR.VRDevice.SetTrackingSpaceType(UnityEngine.VR.TrackingSpaceType.RoomScale);
-#endif
-
-            Monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.RoomScale);
-            Emulator = TouchEmulator.Create();
-            Emulator.transform.SetParent(Right.transform, false);
-            SyncCameraForRoomScale();
+            VRLog.Info("OnStart");
         }
 
         protected override void OnLevel(int level)
@@ -66,8 +67,6 @@ namespace VRMOD.Mode
             GripMoveLeft();
             GripMoveRight();
             MonitorDisplayChange();
-            ReSyncCamera();
-
         }
 
         protected override void OnDestroy()
@@ -107,7 +106,9 @@ namespace VRMOD.Mode
                 {
                     if (Monitor.transform.parent == Left.transform)
                     {
-                        Monitor.SetActive(!Monitor.isActiveAndEnabled);
+                        var activated = !Monitor.isActiveAndEnabled;
+                        Monitor.SetActive(activated);
+                        Left.SetModelActive(!activated);
                     }
                     else
                     {
@@ -115,13 +116,19 @@ namespace VRMOD.Mode
                         Emulator.transform.SetParent(Right.transform, false);
                         Emulator.controller = Right;
                         Monitor.SetActive(true);
+                        Left.SetModelActive(false);
+                        Right.SetModelActive(true);
                     }
                 }
                 else if (Right.MenuButtonDown)
                 {
                     if (Monitor.transform.parent == Right.transform)
                     {
-                        Monitor.SetActive(!Monitor.isActiveAndEnabled);
+                        var activated = !Monitor.isActiveAndEnabled;
+
+                        Monitor.SetActive(activated);
+                        Right.SetModelActive(!activated);
+
                     }
                     else
                     {
@@ -129,6 +136,9 @@ namespace VRMOD.Mode
                         Emulator.transform.SetParent(Left.transform, false);
                         Emulator.controller = Left;
                         Monitor.SetActive(true);
+                        Left.SetModelActive(true);
+                        Right.SetModelActive(false);
+
                     }
                 }
             }
@@ -143,7 +153,6 @@ namespace VRMOD.Mode
             //現在(移動後)のコントローラの位置・回転を格納
             Vector3 afterControllerPosition = Left.transform.position;
             Quaternion afterControllerRotation = Left.transform.rotation;
-
             //"Grip"Moveなのでグリップボタンを入力したときに移動処理を実行
             if (Left.GripButton)
             {
@@ -154,10 +163,10 @@ namespace VRMOD.Mode
                 float rotationDifferenceY = Mathf.DeltaAngle(beforeLeftControllerRotation.eulerAngles.y, afterControllerRotation.eulerAngles.y);
 
                 //コントローラが移動した距離分、CameraRigを移動
-                VR.Camera.transform.position += distanceDifference;
+                VR.Camera.Origin.transform.position += distanceDifference;
 
                 //コントローラのY軸が回転した分、コントローラ位置を軸としてCameraRigを回転移動
-                VR.Camera.transform.RotateAround(afterControllerPosition, Vector3.down, rotationDifferenceY);
+                VR.Camera.Origin.transform.RotateAround(afterControllerPosition, Vector3.down, rotationDifferenceY);
             }
             //現在のコントローラの位置・回転を次回に移動前として使うために格納
             beforeLeftControllerPosition = afterControllerPosition;
@@ -180,10 +189,10 @@ namespace VRMOD.Mode
                 float rotationDifferenceY = Mathf.DeltaAngle(beforeRightControllerRotation.eulerAngles.y, afterControllerRotation.eulerAngles.y);
 
                 //コントローラが移動した距離分、CameraRigを移動
-                VR.Camera.transform.position += distanceDifference;
+                VR.Camera.Origin.transform.position += distanceDifference;
 
                 //コントローラのY軸が回転した分、コントローラ位置を軸としてCameraRigを回転移動
-                VR.Camera.transform.RotateAround(afterControllerPosition, Vector3.down, rotationDifferenceY);
+                VR.Camera.Origin.transform.RotateAround(afterControllerPosition, Vector3.down, rotationDifferenceY);
             }
             //現在のコントローラの位置・回転を次回に移動前として使うために格納
             beforeRightControllerPosition = afterControllerPosition;

@@ -10,66 +10,71 @@ namespace VRMOD.CoreModule
 {
     public class VRCamera : ProtectedBehaviour
     {
-        private static VRCamera _Instance;
-        private GameObject eye;
+        private SteamVR_Camera _SteamVR_Camera;
 
-        public static VRCamera Instance
+        public static VRCamera Create()
+        {
+            return new GameObject("VR Camera").AddComponent<VRCamera>();
+        }
+        public Transform Origin
         {
             get
             {
-                if (_Instance == null)
-                {
-                    _Instance = new GameObject("VRCamera").AddComponent<VRCamera>();
-                }
-                return _Instance;
+                return _SteamVR_Camera.origin;
             }
         }
 
+        public Transform Head
+        {
+            get
+            {
+                return _SteamVR_Camera.head;
+            }
+        }
+
+
         public string CameraName
         {
-            get { return eye.name; }
+            get { return gameObject.name; }
         }
 
         protected override void OnAwake()
         {
             VRLog.Info("OnAWake");
             transform.Reset();
-
-            VRLog.Info("Create Eye Object");
-            eye = new GameObject("eye");
-            eye.transform.Reset();
-            eye.transform.SetParent(transform, false);
-            eye.AddComponent<AudioListener>();
-            VRLog.Info("Add Camera Component");
-            var camera = eye.AddComponent<Camera>();
+            VRLog.Info("Create VR Camera");
             // VR用の設定を反映.
+
+
+            VRLog.Info("Add Audio Component");
+            gameObject.AddComponent<AudioListener>();
+            VRLog.Info("Add Camera Component");
+            // VR設定の反映.
+            var camera = gameObject.AddComponent<Camera>();
             camera.stereoTargetEye = StereoTargetEyeMask.Both;
             camera.nearClipPlane = VR.Settings.NearClipPlane;
-#if UNITY_2018_3_OR_NEWER
-            UnityEngine.XR.XRSettings.eyeTextureResolutionScale = VR.Settings.IPDScale;
-#else
-            UnityEngine.VR.VRSettings.renderScale = VR.Settings.IPDScale;
-#endif
 
-            DontDestroyOnLoad(gameObject);
+            _SteamVR_Camera = gameObject.AddComponent<SteamVR_Camera>();
+
+            return;
         }
 
         public void SyncCamera(Transform t, Vector3 positionOffset)
         {
-            transform.position = (t.position + positionOffset);
-            transform.rotation = t.rotation;
+            Origin.position = (t.position + positionOffset);
+            Origin.rotation = t.rotation;
         }
 
         public void SyncCameraPosition(Vector3 position)
         {
-            transform.position = position;
+            Origin.position = position;
         }
 
         public void CopyFX(Camera source)
         {
             if (source != null)
             {
-                var target = eye.GetComponent<Camera>();
+                var target = GetComponent<Camera>();
 
                 // Clean
                 foreach (var fx in target.gameObject.GetCameraEffects())

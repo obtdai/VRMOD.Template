@@ -16,38 +16,41 @@ namespace VRMOD.CoreModule
     /// </summary>
     public static class VR
     {
-        public static VRCamera Camera { get { return VRCamera.Instance; } }
-        public static ControlMode Mode { get { return VRManager.Instance.Mode; } }
+        public static VRCamera Camera { get { return VRManager.Instance.Camera; } }
         public static VRSettings Settings { get { return VRManager.Settings; } }
         public static Shortcuts Shortcuts { get { return VRManager.Settings.Shortcuts; } }
         public static VRManager Manager { get { return VRManager.Instance; } }
-
         public static ResourceManager Resource { get { return ResourceManager.Instance; } }
 
         public static uDesktopDuplication.Manager MonitorManager { get { return VRManager.MonitorManager; } }
 
         public static uTouchInjection.Manager TouchManager { get { return VRManager.TouchManager; } }
+
+        public static SteamVR_Render Render { get { return VRManager.Render; } }
         public static bool Active { get; set; }
     }
 
     public class VRManager : ProtectedBehaviour
     {
+        private ControlMode _ControlMode;
         private static VRManager _Instance;
         private static VRSettings _Settings;
+        private static SteamVR_Render _Render;
+        private static VRCamera _Camera;
 
         private static uDesktopDuplication.Manager _MonitorManager;
 
         private static uTouchInjection.Manager _TouchManager;
+
         public VRCamera Camera
         {
-            get { return VRCamera.Instance; }
+            get
+            {
+                return _Camera;
+            }
         }
 
-        public ControlMode Mode
-        {
-            get;
-            private set;
-        }
+
 
         public static VRSettings Settings
         {
@@ -84,14 +87,28 @@ namespace VRMOD.CoreModule
             }
         }
 
+        public static SteamVR_Render Render
+        {
+            get
+            {
+                if (_Render == null)
+                {
+                    throw new InvalidOperationException("SteamVR_Render has not been created yet!");
+                }
+                return _Render;
+
+            }
+        }
+
         private HashSet<Camera> _CheckedCameras = new HashSet<Camera>();
 
         public static VRManager Create(VRSettings settings)
         {
             if (_Instance == null)
             {
-                _Instance = new GameObject("VRManager").AddComponent<VRManager>();
                 _Settings = settings;
+                _Instance = new GameObject("VRManager").AddComponent<VRManager>();
+
             }
             return _Instance;
 
@@ -108,18 +125,21 @@ namespace VRMOD.CoreModule
             }
         }
 
-        public void SetMode<T>() where T : ControlMode
+        public void SetMode(ControlMode.ModeType Mode)
         {
-            if (Mode == null || !(Mode is T))
+            if (Mode != _ControlMode.Mode)
             {
-                // Mode Change
-                if (Mode != null)
-                {
-                    // Get on clean grounds
-                    DestroyImmediate(Mode);
-                }
+                var go = _ControlMode.gameObject;
+                DestroyImmediate(_ControlMode);
 
-                Mode = VRCamera.Instance.gameObject.AddComponent<T>();
+                if (Mode == ControlMode.ModeType.SeatedMode)
+                {
+                    _ControlMode = go.AddComponent<SeatedMode>();
+                }
+                else
+                {
+                    _ControlMode = go.AddComponent<StandingMode>();
+                }
             }
         }
 
@@ -132,11 +152,12 @@ namespace VRMOD.CoreModule
 #else
             UnityEngine.VR.VRSettings.showDeviceView = false;
 #endif
-            _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
 
-            _TouchManager = uTouchInjection.Manager.CreateInstance();
-
-            // VR用設定の更新.
+#if UNITY_2018_3_OR_NEWER
+            UnityEngine.XR.XRSettings.eyeTextureResolutionScale = VR.Settings.IPDScale;
+#else
+            UnityEngine.VR.VRSettings.renderScale = VR.Settings.IPDScale;
+#endif
 
             DontDestroyOnLoad(gameObject);
         }
@@ -150,6 +171,26 @@ namespace VRMOD.CoreModule
             VRLog.Info("OnLevel");
             VRLog.Info($"Level:{level}");
             _CheckedCameras.Clear();
+
+            VRLog.Info("MonitorManager Created");
+            _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
+            VRLog.Info("TouchManager Created");
+            _TouchManager = uTouchInjection.Manager.CreateInstance();
+            VRLog.Info("SteamVR Render Created");
+            _Render = SteamVR_Render.instance;
+
+            // VR用設定の更新.
+            VRLog.Info("VR Camera Created");
+            _Camera = VRCamera.Create();
+            // モード初期化.
+            if ((_ControlMode == null) || (_ControlMode.Mode == ControlMode.ModeType.SeatedMode))
+            {
+                _ControlMode = new GameObject("Mode").AddComponent<SeatedMode>();
+            }
+            else
+            {
+                _ControlMode = new GameObject("Mode").AddComponent<StandingMode>();
+            }
         }
 
         protected override void OnUpdate()

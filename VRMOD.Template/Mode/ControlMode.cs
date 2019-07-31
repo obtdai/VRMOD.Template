@@ -13,15 +13,29 @@ namespace VRMOD.Mode
 {
     public class ControlMode : ProtectedBehaviour
     {
+        public enum ModeType
+        {
+            SeatedMode,
+            StandingMode
+        }
+
+        public virtual ModeType Mode
+        {
+            get;
+        }
+
+        private SteamVR_ControllerManager _ControllerManager;
         public Controller Left;
         public Controller Right;
         protected IEnumerable<IShortcut> Shortcuts { get; private set; }
 
         protected override void OnAwake()
         {
-            VRLog.Info("OnAWake");
             base.OnAwake();
-
+            VRLog.Info("OnAWake");
+            Shortcuts = CreateShortcuts();
+            CreateControllers();
+            VR.Camera.transform.Reset();
 
             return;
         }
@@ -29,9 +43,7 @@ namespace VRMOD.Mode
         {
             VRLog.Info("OnStart");
             base.OnStart();
-            CreateControllers();
-            Shortcuts = CreateShortcuts();
-            VR.Camera.transform.Reset();
+
         }
 
         protected virtual IEnumerable<IShortcut> CreateShortcuts()
@@ -47,19 +59,31 @@ namespace VRMOD.Mode
             };
         }
 
+        protected override void OnLevel(int level)
+        {
+            base.OnLevel(level);
+
+        }
         protected virtual void CreateControllers()
         {
+            // コントローラマネージャの生成
+            VRLog.Info("SteamVR Controller Manager Create");
+            _ControllerManager = gameObject.AddComponent<SteamVR_ControllerManager>();
+            _ControllerManager.enabled = false;
             // コントローラの生成.
             VRLog.Info("Left Controller Create");
             Left = LeftController.Create();
-            Left.transform.SetParent(VR.Camera.transform, false);
             VRLog.Info("Right Controller Create");
             Right = RightController.Create();
-            Right.transform.SetParent(VR.Camera.transform, false);
 
-            Left.Other = Right;
-            Right.Other = Left;
 
+            _ControllerManager.left = Left.gameObject;
+            _ControllerManager.right = Right.gameObject;
+            _ControllerManager.UpdateTargets();
+            _ControllerManager.enabled = true;
+
+            Left.transform.SetParent(VR.Camera.Origin, true);
+            Right.transform.SetParent(VR.Camera.Origin, true);
             return;
         }
 
@@ -67,6 +91,7 @@ namespace VRMOD.Mode
         protected virtual void OnDestroy()
         {
             VRLog.Info("On Destroy");
+            DestroyImmediate(_ControllerManager);
             DestroyImmediate(Left.gameObject);
             DestroyImmediate(Right.gameObject);
 
@@ -75,7 +100,6 @@ namespace VRMOD.Mode
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            
             CheckInput();
         }
 

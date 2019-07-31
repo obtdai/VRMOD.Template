@@ -15,7 +15,6 @@ namespace VRGIN.Controls
             LeftController controller;
             controller = new GameObject("Left Controller").AddComponent<LeftController>();
             controller.transform.Reset();
-
             return controller;
         }
 
@@ -23,7 +22,6 @@ namespace VRGIN.Controls
         {
             VRLog.Info("OnAwake");
             base.OnAwake();
-            _Type = CtrlType.Left;
         }
     }
 }

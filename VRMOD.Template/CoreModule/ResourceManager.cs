@@ -19,6 +19,7 @@ namespace VRMOD.CoreModule
             get {
                 if (_Instance == null)
                 {
+                    VRLog.Info("Get ResourceManager");
                     _Instance = new ResourceManager();
                 }
                 return _Instance;

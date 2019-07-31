@@ -81,6 +81,81 @@
     <Compile Include="..\VRMOD.Template\InputEmulator\TouchPointerDrawer.cs">
       <Link>InputEmulator\TouchPointerDrawer.cs</Link>
     </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Plugins\openvr_api.cs">
+      <Link>Libs\SteamVR\Plugins\openvr_api.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Camera.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Camera.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_CameraFlip.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_CameraFlip.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_CameraMask.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_CameraMask.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Controller.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Controller.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_ControllerManager.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_ControllerManager.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Ears.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Ears.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Events.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Events.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_ExternalCamera.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_ExternalCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Fade.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Fade.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Frustum.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Frustum.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_GameView.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_GameView.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_IK.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_IK.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Overlay.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Overlay.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_PlayArea.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_PlayArea.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Render.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Render.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_RenderModel.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_RenderModel.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Skybox.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Skybox.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_SphericalProjection.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_SphericalProjection.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_TestController.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_TestController.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_TrackedCamera.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_TrackedCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_TrackedObject.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_TrackedObject.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_UpdatePoses.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_UpdatePoses.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Libs\SteamVR\Scripts\SteamVR_Utils.cs">
+      <Link>Libs\SteamVR\Scripts\SteamVR_Utils.cs</Link>
+    </Compile>
     <Compile Include="..\VRMOD.Template\Libs\uDesktopDuiplication\Lib.cs">
       <Link>Libs\uDesktopDuiplication\Lib.cs</Link>
     </Compile>

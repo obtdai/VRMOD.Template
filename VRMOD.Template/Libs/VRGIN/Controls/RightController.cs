@@ -23,7 +23,6 @@ namespace VRGIN.Controls
         {
             VRLog.Info("OnAwake");
             base.OnAwake();
-            _Type = CtrlType.Right;
         }
     }
 }

@@ -31,7 +31,9 @@ namespace VRMOD.CoreModule
             Material material;
 
             // メッシュのロードを試す.
+            VRLog.Info("Mesh Load Start");
             mesh = VR.Resource.MonitorMesh;
+            VRLog.Info("Mesh Load End");
             if (mesh != null)
             {
                 // 半径を再計算.

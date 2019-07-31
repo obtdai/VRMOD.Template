@@ -16,31 +16,34 @@ namespace VRMOD.Mode
         private DesktopMonitor monitor;
         private Camera syncCamera;
 
+        public override ModeType Mode
+        {
+            get { return ModeType.SeatedMode; }
+        }
         protected override void OnAwake()
         {
-            VRLog.Info("OnAWake()");
             base.OnAwake();
+            VRLog.Info("OnAWake()");
             // 座位モードに変更.
-#if UNITY_2018_3_OR_NEWER
-            UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.Stationary);
-#else
-            UnityEngine.VR.VRDevice.SetTrackingSpaceType(UnityEngine.VR.TrackingSpaceType.Stationary);
-#endif
+            VR.Render.trackingSpace = Valve.VR.ETrackingUniverseOrigin.TrackingUniverseSeated;
             monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.Stationary);
-            MoveMonitor(VR.Camera.transform);
+            MoveMonitor(VR.Camera.Head);
+
+            Left.enabled = false;
+            Right.enabled = false;
+
+            return;
         }
 
         protected override void OnStart()
         {
             base.OnStart();
-            Left.gameObject.SetActive(false);
-            Right.gameObject.SetActive(false);
         }
 
         protected override IEnumerable<IShortcut> CreateShortcuts()
         {
             return base.CreateShortcuts().Concat(new IShortcut[] {
-                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+C"), () => { VRLog.Info("Mode Change to Standing Mode"); VR.Manager.SetMode<StandingMode>(); }),
+                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+C"), () => { VRLog.Info("Mode Change to Standing Mode"); VR.Manager.SetMode(ModeType.StandingMode); }),
                 new KeyboardShortcut(new KeyStroke("Ctrl+Space"), () => {
                     if (monitor != null)
                     {
@@ -52,7 +55,7 @@ namespace VRMOD.Mode
                         }
                         else
                         {
-                            MoveMonitor(VR.Camera.transform);
+                            MoveMonitor(VR.Camera.Head);
                             monitor.SetActive(true);
                             VRLog.Info($"Monitor active, show position is {monitor.transform.position}");
                         }
@@ -64,11 +67,7 @@ namespace VRMOD.Mode
 
                     }
                 }),
-#if UNITY_2018_3_OR_NEWER
-                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.XR.InputTracking.Recenter(); })
-#else
-                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+R"), () => { VRLog.Info("VR Camera Recenterd"); UnityEngine.VR.InputTracking.Recenter(); })
-#endif
+                new MultiKeyboardShortcut(new KeyStroke("Ctrl+C"), new KeyStroke("Ctrl+R"), () => { SteamVR.instance.hmd.ResetSeatedZeroPose(); })
 
             });
         }
@@ -111,12 +110,7 @@ namespace VRMOD.Mode
             base.OnLevel(level);
             VRLog.Info("OnLevel");
             VRLog.Info($"Level:{level}");
-
-            monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.Stationary);
-            MoveMonitor(VR.Camera.transform);
         }
-
-
 
         private void MoveMonitor(Transform origin)
         {
@@ -125,6 +119,7 @@ namespace VRMOD.Mode
             monitor.transform.rotation = origin.transform.rotation;
 
             // モニタをHMDの向きに合わせて回転する.
+            // TODO SteamVRのカメラ位置取得におきかえ.
 #if UNITY_2018_3_OR_NEWER
             monitor.transform.Rotate(UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.Head).eulerAngles);
 #else

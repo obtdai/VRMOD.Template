@@ -70,7 +70,7 @@ namespace VRMOD.CoreModule
         private float _RotationMultiplier = 1f;
 
         [XmlComment("Shortcuts used by VRMOD. Refer to https://docs.unity3d.com/ScriptReference/KeyCode.html for a list of available keys.")]
-        public virtual Shortcuts Shortcuts { get { return _Shortcuts; } protected set { _Shortcuts = value; } }
+        public virtual Shortcuts Shortcuts { get { return _Shortcuts; } set { _Shortcuts = value; } }
         private Shortcuts _Shortcuts = new Shortcuts();
 
         public event EventHandler<PropertyChangedEventArgs> PropertyChanged = delegate { };
@@ -306,10 +306,10 @@ namespace VRMOD.CoreModule
     public class XmlKeyStroke
     {
         [XmlAttribute("on")]
-        public KeyMode CheckMode { get; private set; }
+        public KeyMode CheckMode { get; set; }
 
         [XmlText]
-        public string Keys { get; private set; }
+        public string Keys { get; set; }
 
         public XmlKeyStroke()
         {

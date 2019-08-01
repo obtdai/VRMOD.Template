@@ -31,11 +31,14 @@ namespace VRMOD.Mode
         {
             VRLog.Info("OnAwake");
             base.OnAwake();
-            VR.Render.trackingSpace = Valve.VR.ETrackingUniverseOrigin.TrackingUniverseSeated;
+            VR.Render.trackingSpace = Valve.VR.ETrackingUniverseOrigin.TrackingUniverseStanding;
             VR.Camera.Origin.transform.Reset();
             Monitor = DesktopMonitor.Create(DesktopMonitor.CreateType.RoomScale);
             Emulator = TouchEmulator.Create();
             Emulator.transform.SetParent(Right.transform, false);
+
+            DontDestroyOnLoad(Monitor.gameObject);
+            DontDestroyOnLoad(Emulator.gameObject);
         }
 
         protected override IEnumerable<IShortcut> CreateShortcuts()
@@ -51,7 +54,9 @@ namespace VRMOD.Mode
         {
             base.OnStart();
 
+            
             VRLog.Info("OnStart");
+
         }
 
         protected override void OnLevel(int level)
@@ -63,7 +68,6 @@ namespace VRMOD.Mode
         protected override void OnUpdate()
         {
             base.OnUpdate();
-
             GripMoveLeft();
             GripMoveRight();
             MonitorDisplayChange();

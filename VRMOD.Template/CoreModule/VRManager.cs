@@ -127,6 +127,7 @@ namespace VRMOD.CoreModule
 
         public void SetMode(ControlMode.ModeType Mode)
         {
+            VRLog.Info($"SetMode ModeType:{Mode}");
             if (Mode != _ControlMode.Mode)
             {
                 var go = _ControlMode.gameObject;
@@ -147,6 +148,7 @@ namespace VRMOD.CoreModule
         {
             // 自分自身の位置と回転を初期化.
             VRLog.Info("OnAWake");
+            transform.Reset();
 #if UNITY_2018_3_OR_NEWER
             UnityEngine.XR.XRSettings.showDeviceView = false;
 #else
@@ -164,14 +166,6 @@ namespace VRMOD.CoreModule
         protected override void OnStart()
         {
             VRLog.Info("OnStart");
-        }
-
-        protected override void OnLevel(int level)
-        {
-            VRLog.Info("OnLevel");
-            VRLog.Info($"Level:{level}");
-            _CheckedCameras.Clear();
-
             VRLog.Info("MonitorManager Created");
             _MonitorManager = uDesktopDuplication.Manager.CreateInstance();
             VRLog.Info("TouchManager Created");
@@ -191,6 +185,20 @@ namespace VRMOD.CoreModule
             {
                 _ControlMode = new GameObject("Mode").AddComponent<StandingMode>();
             }
+
+            // 生成オブジェクトが破棄されないようにする.
+            _MonitorManager.transform.SetParent(transform, true);
+            _TouchManager.transform.SetParent(transform, true);
+            _Render.transform.SetParent(transform, true);
+            _Camera.Origin.SetParent(transform, true);
+            _ControlMode.transform.SetParent(transform, true);
+        }
+
+        protected override void OnLevel(int level)
+        {
+            VRLog.Info("OnLevel");
+            VRLog.Info($"Level:{level}");
+            _CheckedCameras.Clear();
         }
 
         protected override void OnUpdate()

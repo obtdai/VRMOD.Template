@@ -35,7 +35,6 @@ namespace VRMOD.Mode
             VRLog.Info("OnAWake");
             Shortcuts = CreateShortcuts();
             CreateControllers();
-            VR.Camera.transform.Reset();
 
             return;
         }
@@ -62,6 +61,7 @@ namespace VRMOD.Mode
         protected override void OnLevel(int level)
         {
             base.OnLevel(level);
+            VRLog.Info("OnLevel");
 
         }
         protected virtual void CreateControllers()
@@ -81,9 +81,10 @@ namespace VRMOD.Mode
             _ControllerManager.right = Right.gameObject;
             _ControllerManager.UpdateTargets();
             _ControllerManager.enabled = true;
-
+            
             Left.transform.SetParent(VR.Camera.Origin, true);
             Right.transform.SetParent(VR.Camera.Origin, true);
+
             return;
         }
 
@@ -100,6 +101,7 @@ namespace VRMOD.Mode
         protected override void OnUpdate()
         {
             base.OnUpdate();
+
             CheckInput();
         }
 

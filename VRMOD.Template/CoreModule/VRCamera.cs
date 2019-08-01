@@ -53,6 +53,7 @@ namespace VRMOD.CoreModule
             var camera = gameObject.AddComponent<Camera>();
             camera.stereoTargetEye = StereoTargetEyeMask.Both;
             camera.nearClipPlane = VR.Settings.NearClipPlane;
+            camera.cameraType = CameraType.VR;
 
             _SteamVR_Camera = gameObject.AddComponent<SteamVR_Camera>();
 

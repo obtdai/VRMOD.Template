@@ -32,6 +32,8 @@ namespace VRMOD.Mode
             Left.enabled = false;
             Right.enabled = false;
 
+            DontDestroyOnLoad(monitor.gameObject);
+
             return;
         }
 

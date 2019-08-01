@@ -26,6 +26,13 @@ namespace VRGIN.Controls
             return;
         }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            VRLog.Info("OnStart");
+        }
+
         public void SetModelActive(bool active)
         {
             _RenderModel.gameObject.SetActive(active);

@@ -235,6 +235,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\$(ProjectName) $(SolutionDir)$(OutDir)$(ProjectName)\
-copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)</PostBuildEvent>
+copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)
+
+copy /y $(TargetPath) E:\PlayDisc\06_VR\隣人部の秘密活動_VR\Plugins\VRMOD.Template.dll
+copy /y $(TargetDir)$(TargetName).pdb E:\PlayDisc\06_VR\隣人部の秘密活動_VR\Plugins\VRMOD.Template.pdb</PostBuildEvent>
   </PropertyGroup>
 </Project>

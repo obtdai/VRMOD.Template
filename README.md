@@ -5,36 +5,34 @@ Unity3Dで作成されたゲームをVR化するMOD.
 
 MOD for making games created in Unity 3D compatible with VR.
 
-## Requirement tool.
+## 必要なツール Requirement tool.
 [IPA(Illusion Plugin Architecture)](https://github.com/Eusth/IPA)
 
 [UABE(Unity Asset Bundle Extractor)](https://github.com/DerPopo/UABE)
 
-## Using Source Code.
+## ソースコード使用方法 Using Source Code.
 
-1. Checkout the project 
+1. プロジェクトをチェックアウト Checkout the project 
 ~~~
 git clone --recursive https://github.com/obtdai/VRMOD.Template.git
 cd VRMOD.Template
 ~~~
-2. Open the Solution (*.sln) File.
-3. Start the build in the Release configuration
-This will generate all you need inside bin\Release. (This should be the same output as on the releases page).
-If you've set the game directory, your game will also have been updated.
+2. slnファイル(*.sln) を開く Open the Solution (*.sln) File.
+3. Release設定でビルドを開始する. Start the build in the Release configuration.
 
 ### Running
-1. Patch your game by dragging its executable on IPA.exe (only has to be done once).
-2. By default, the game will now boot into VR mode when SteamVR is running (make sure Desktop Game Theatre is disabled).
+1. IPA.exeにゲームの実行ファイルをドラッグしてパッチをあてる(1回のみ) Patch your game by dragging its executable on IPA.exe (only has to be done once).
+2. 通常ゲームはSteamVRが起動している時VRモードで起動する(シアターモードは無効化する) (By default, the game will now boot into VR mode when SteamVR is running (make sure Desktop Game Theatre is disabled)).
 
-## Usage the release.
+## Release成果物の利用方法 (Usage the release.)
 
-1. Download release from the release page
-2. Extract contents into a Unity folder
-3. Drag the game executable onto IPA.exe
-4. Patching Your Game.
+1. 成果物をReleaseページからダウンロード (Download release from the release page)
+2. 解凍したコンテンツをUnityゲームのフォルダに格納する (Extract contents into a Unity folder)
+3. ゲームの実行ファイルをIPA.exeにドラッグする (Drag the game executable onto IPA.exe)
+4. ゲームにパッチを当てる. (Patching Your Game).
 
 ### Runnning
-Start the game while SteamVR is running or use the --vr flag.
+SteamVRを実行した状態でゲームを開始するか、 --vr をつけて起動する. (Start the game while SteamVR is running or use the --vr flag.)
 
 #### パッチ当て方法 How to Patching
 - ゲームインストールフォルダにある「ゲーム名\_Data/globalgamemanagers」をUABEで開く。(Open "Game name\_Data/globalgamemanagers" in the game installation folder with UABE.)
@@ -63,6 +61,22 @@ _修正後 after fix_
 
 - 再度UABEでglobalgamemanagerを開き、修正したダンプファイルをインポートして更新してください。  
 - Open globalgamemanager again with UABE and import and update the modified dump file.
+
+## 着座モード(デフォルト) 操作方法 (SeatedMode(Default) Controls)
+
+|キー操作            |内容                                                   |
+|-------------------|-------------------------------------------------------|
+|Ctrl+Space         |デスクトップモニタの表示(View Desktop Monitor)           |
+|Ctrl+C, Ctrl+C     |ルームスケールモードへ変更(Change RoomScale Mode)        |
+
+## ルームスケールモード 操作方法 (RoomScaleMode Controls)
+
+|キー操作                                |内容                                         |
+|---------------------------------------|---------------------------------------------|
+|Ctrl+C, Ctrl+C                         |着座モードへ変更(Change Seated Mode)             |
+|Menu Button                            |デスクトップモニタの表示(View Desktop Monitor)    |
+|Trigger Button                         |マウスクリックエミュレート(Emulation Mouse Click) |
+|Grip Button                            |グリップムーヴによる移動 (Grip Move)              |
 
 ## Author
 

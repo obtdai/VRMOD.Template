@@ -5,9 +5,8 @@ using System.Text;
 using VRMOD.CoreModule;
 using VRMOD.Extension;
 using UnityEngine;
-using VRGIN.Core;
-using VRGIN.Controls;
-using VRGIN.Helpers;
+using VRMOD.Controls;
+using VRMOD.Helpers;
 
 namespace VRMOD.Mode
 {
@@ -122,11 +121,8 @@ namespace VRMOD.Mode
 
             // モニタをHMDの向きに合わせて回転する.
             // TODO SteamVRのカメラ位置取得におきかえ.
-#if UNITY_2018_3_OR_NEWER
-            monitor.transform.Rotate(UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.Head).eulerAngles);
-#else
-            monitor.transform.Rotate(UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.Head).eulerAngles);
-#endif
+            
+            monitor.transform.Rotate(VR.Camera.Head.localRotation.eulerAngles);
             // モニタの位置を設定値分オフセットする.
             monitor.transform.position += (monitor.transform.forward * VR.Settings.Distance);
 

@@ -51,8 +51,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VRMOD.Template\Controls\Controller.cs">
+      <Link>Controls\Controller.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Controls\IShortcut.cs">
+      <Link>Controls\IShortcut.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Controls\KeyboardShortcut.cs">
+      <Link>Controls\KeyboardShortcut.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Controls\LeftController.cs">
+      <Link>Controls\LeftController.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Controls\RightController.cs">
+      <Link>Controls\RightController.cs</Link>
+    </Compile>
     <Compile Include="..\VRMOD.Template\CoreModule\DesktopMonitor.cs">
       <Link>CoreModule\DesktopMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\CoreModule\Logger.cs">
+      <Link>CoreModule\Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\CoreModule\ProtectedBahaviour.cs">
+      <Link>CoreModule\ProtectedBahaviour.cs</Link>
     </Compile>
     <Compile Include="..\VRMOD.Template\CoreModule\ResourceManager.cs">
       <Link>CoreModule\ResourceManager.cs</Link>
@@ -74,6 +95,9 @@
     </Compile>
     <Compile Include="..\VRMOD.Template\Extension\TransformExtension.cs">
       <Link>Extension\TransformExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\VRMOD.Template\Helpers\KeyStroke.cs">
+      <Link>Helpers\KeyStroke.cs</Link>
     </Compile>
     <Compile Include="..\VRMOD.Template\InputEmulator\TouchEmulator.cs">
       <Link>InputEmulator\TouchEmulator.cs</Link>
@@ -180,30 +204,6 @@
     <Compile Include="..\VRMOD.Template\Libs\uTouchInjection\Pointer.cs">
       <Link>Libs\uTouchInjection\Pointer.cs</Link>
     </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\Controller.cs">
-      <Link>Libs\VRGIN\Controls\Controller.cs</Link>
-    </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\IShortcut.cs">
-      <Link>Libs\VRGIN\Controls\IShortcut.cs</Link>
-    </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\KeyboardShortcut.cs">
-      <Link>Libs\VRGIN\Controls\KeyboardShortcut.cs</Link>
-    </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\LeftController.cs">
-      <Link>Libs\VRGIN\Controls\LeftController.cs</Link>
-    </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Controls\RightController.cs">
-      <Link>Libs\VRGIN\Controls\RightController.cs</Link>
-    </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Core\Logger.cs">
-      <Link>Libs\VRGIN\Core\Logger.cs</Link>
-    </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Core\ProtectedBahaviour.cs">
-      <Link>Libs\VRGIN\Core\ProtectedBahaviour.cs</Link>
-    </Compile>
-    <Compile Include="..\VRMOD.Template\Libs\VRGIN\Helpers\KeyStroke.cs">
-      <Link>Libs\VRGIN\Helpers\KeyStroke.cs</Link>
-    </Compile>
     <Compile Include="..\VRMOD.Template\Mode\ControlMode.cs">
       <Link>Mode\ControlMode.cs</Link>
     </Compile>
@@ -224,13 +224,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resource\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\VRMOD.Template\Resource\vrmod_2018_3">
+      <Link>Resource\vrmod_2018_3</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

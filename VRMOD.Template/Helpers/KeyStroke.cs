@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 
 
-namespace VRGIN.Helpers
+namespace VRMOD.Helpers
 {
     public enum KeyMode
     {

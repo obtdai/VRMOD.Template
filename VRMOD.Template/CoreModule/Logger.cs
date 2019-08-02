@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace VRGIN.Core
+namespace VRMOD.CoreModule
 {
     public class Logger : VRLog
     {

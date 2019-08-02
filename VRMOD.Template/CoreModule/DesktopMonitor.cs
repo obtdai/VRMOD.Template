@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VRGIN.Core;
 using UnityEngine;
 using VRMOD.Extension;
 using uDesktopDuplication;
@@ -32,8 +31,17 @@ namespace VRMOD.CoreModule
 
             // メッシュのロードを試す.
             VRLog.Info("Mesh Load Start");
-            mesh = VR.Resource.MonitorMesh;
-            VRLog.Info("Mesh Load End");
+            try
+            {
+                mesh = VR.Resource.MonitorMesh;
+                VRLog.Info("Mesh Load End");
+            }
+            catch (System.TypeLoadException e)
+            {
+                VRLog.Info(e.Message);
+                mesh = null;
+            }
+
             if (mesh != null)
             {
                 // 半径を再計算.
@@ -71,7 +79,16 @@ namespace VRMOD.CoreModule
                 {
                     VRLog.Info($"Material Change");
                     VRLog.Info($"Old Material Name is {renderer.material}");
-                    material = VR.Resource.MonitorMaterial;
+
+                    try
+                    {
+                        material = VR.Resource.MonitorMaterial;
+                    }
+                    catch (System.TypeLoadException e)
+                    {
+                        VRLog.Info(e.Message);
+                        material = null;
+                    }
                     if (material != null)
                     {
                         renderer.material = material;
@@ -109,7 +126,38 @@ namespace VRMOD.CoreModule
                         }
                         else
                         {
-                            VRLog.Info($"Shader Can't load Check the Material Please...");
+                            try
+                            {
+                                material = VR.Resource.MonitorStandardMaterial;
+                            }
+                            catch (System.TypeLoadException e)
+                            {
+                                VRLog.Info(e.Message);
+                                material = null;
+                            }
+                            if (material != null)
+                            {
+                                renderer.material = material;
+                                VRLog.Info($"Material Name is {renderer.material}");
+                                if (renderer.material.shader)
+                                {
+                                    VRLog.Info($"Shader Is : {renderer.material.shader.name}");
+                                    VRLog.Info($"Shader Is Supported Status : {renderer.material.shader.isSupported}");
+                                    if (renderer.material.shader.isSupported == false)
+                                    {
+                                        VRLog.Info("Fallback Shader Standard");
+                                        var shader = Shader.Find("Standard");
+                                        if (shader != null)
+                                        {
+                                            renderer.material.shader = shader;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                VRLog.Info($"Shader Can't load Check the Material Please...");
+                            }
                         }
                     }
                     // 描画が反転するので、テクスチャーのスケールを反転させる.

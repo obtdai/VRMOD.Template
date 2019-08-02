@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VRMOD.CoreModule;
-using VRGIN.Helpers;
-using VRGIN.Controls;
-using VRGIN.Core;
+using VRMOD.Helpers;
+using VRMOD.Controls;
 using UnityEngine;
 using VRMOD.Extension;
 using VRMOD.InputEmulator;
@@ -76,6 +75,8 @@ namespace VRMOD.Mode
         protected override void OnDestroy()
         {
             VRLog.Info("On Destroy");
+            // 破棄前に解除しておく.
+            Emulator.StartRelease();
             DestroyImmediate(Emulator.gameObject);
             DestroyImmediate(Monitor.gameObject);
             base.OnDestroy();

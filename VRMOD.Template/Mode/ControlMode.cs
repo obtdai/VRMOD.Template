@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using VRMOD.CoreModule;
-using VRGIN.Core;
-using VRGIN.Controls;
-using VRMOD.Extension;
+using VRMOD.Controls;
 
 
 namespace VRMOD.Mode

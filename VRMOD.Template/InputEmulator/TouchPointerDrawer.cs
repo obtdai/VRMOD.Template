@@ -1,4 +1,4 @@
-﻿using VRGIN.Core;
+﻿using VRMOD.CoreModule;
 using UnityEngine;
 using uTouchInjection;
 

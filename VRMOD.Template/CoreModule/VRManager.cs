@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using UnityEngine;
 using VRMOD.Mode;
-using VRGIN.Core;
 using VRMOD.Extension;
 
 namespace VRMOD.CoreModule

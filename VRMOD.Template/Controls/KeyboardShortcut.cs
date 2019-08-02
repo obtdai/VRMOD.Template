@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using VRMOD.CoreModule;
-using VRGIN.Helpers;
+using VRMOD.Helpers;
 
-namespace VRGIN.Controls
+namespace VRMOD.Controls
 {
     public class KeyboardShortcut : IShortcut
     {

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using VRGIN.Core;
 using uTouchInjection;
-using VRGIN.Controls;
+using VRMOD.Controls;
 using VRMOD.CoreModule;
 using VRMOD.Extension;
 
@@ -12,6 +11,7 @@ namespace VRMOD.InputEmulator
 
         public static TouchEmulator Create()
         {
+            Material material;
             VRLog.Info("Touch Emulator Create");
             GameObject touchEmulator = new GameObject("Touch Emulator");
             touchEmulator.transform.Reset();
@@ -22,26 +22,38 @@ namespace VRMOD.InputEmulator
             if (renderer != null)
             {
                 VRLog.Info($"Material Change");
-                renderer.material = VR.Resource.TouchRayMaterial;
-                VRLog.Info($"Material Name is {renderer.material}");
-                if (renderer.material.shader)
+                try
                 {
-                    VRLog.Info($"Shader Is : {renderer.material.shader.name}");
-                    VRLog.Info($"Shader Is Supported Status : {renderer.material.shader.isSupported}");
-
-                    if (renderer.material.shader.isSupported == false)
+                    material = VR.Resource.TouchRayMaterial;
+                }
+                catch (System.TypeLoadException e)
+                {
+                    material = null;
+                    VRLog.Info(e.Message);
+                }
+                if (material != null)
+                {
+                    renderer.material = material;
+                    VRLog.Info($"Material Name is {renderer.material}");
+                    if (renderer.material.shader)
                     {
-                        VRLog.Info("Fallback Shader Standard");
-                        var shader = Shader.Find("Standard");
-                        if (shader != null)
+                        VRLog.Info($"Shader Is : {renderer.material.shader.name}");
+                        VRLog.Info($"Shader Is Supported Status : {renderer.material.shader.isSupported}");
+
+                        if (renderer.material.shader.isSupported == false)
                         {
-                            renderer.material.shader = shader;
+                            VRLog.Info("Fallback Shader Standard");
+                            var shader = Shader.Find("Standard");
+                            if (shader != null)
+                            {
+                                renderer.material.shader = shader;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    VRLog.Info($"Shader Can't load Check the Material Please...");
+                    else
+                    {
+                        VRLog.Info($"Shader Can't load Check the Material Please...");
+                    }
                 }
             }
 
@@ -60,27 +72,40 @@ namespace VRMOD.InputEmulator
             if (cursorRenderer != null)
             {
                 VRLog.Info($"Material Change");
-                cursorRenderer.material = VR.Resource.TouchCursorMaterial;
-                VRLog.Info($"Material Name is {cursorRenderer.material}");
-                if (cursorRenderer.material.shader)
+                try
                 {
-                    VRLog.Info($"Shader Is : {cursorRenderer.material.shader.name}");
-                    VRLog.Info($"Shader Is Supported Status : {cursorRenderer.material.shader.isSupported}");
-
-                    if (cursorRenderer.material.shader.isSupported == false)
+                    material = VR.Resource.TouchCursorMaterial;
+                }
+                catch (System.TypeLoadException e)
+                {
+                    material = null;
+                    VRLog.Info(e.Message);
+                }
+                if (material != null)
+                {
+                    cursorRenderer.material = material;
+                    VRLog.Info($"Material Name is {cursorRenderer.material}");
+                    if (cursorRenderer.material.shader)
                     {
-                        VRLog.Info("Fallback Shader Standard");
-                        var shader = Shader.Find("Standard");
-                        if (shader != null)
+                        VRLog.Info($"Shader Is : {cursorRenderer.material.shader.name}");
+                        VRLog.Info($"Shader Is Supported Status : {cursorRenderer.material.shader.isSupported}");
+
+                        if (cursorRenderer.material.shader.isSupported == false)
                         {
-                            cursorRenderer.material.shader = shader;
+                            VRLog.Info("Fallback Shader Standard");
+                            var shader = Shader.Find("Standard");
+                            if (shader != null)
+                            {
+                                cursorRenderer.material.shader = shader;
+                            }
                         }
                     }
+                    else
+                    {
+                        VRLog.Info($"Shader Can't load Check the Material Please...");
+                    }
                 }
-                else
-                {
-                    VRLog.Info($"Shader Can't load Check the Material Please...");
-                }
+
             }
             drawer.cursor = cursor;
 #endif
@@ -218,7 +243,7 @@ namespace VRMOD.InputEmulator
             }
         }
 
-        void StartRelease()
+        public void StartRelease()
         {
             ReleasePointer();
             state = State.Release;

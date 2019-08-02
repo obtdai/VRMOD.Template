@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using VRMOD.Extension;
-using VRGIN.Core;
+using VRMOD.CoreModule;
 
-namespace VRGIN.Controls
+namespace VRMOD.Controls
 {
     class RightController : Controller
     {

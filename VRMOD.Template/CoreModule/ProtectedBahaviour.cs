@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace VRGIN.Core
+namespace VRMOD.CoreModule
 {
     /// <summary>
     /// Behaviour that wraps a few of Unity's methods in try/catch blocks.

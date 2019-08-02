@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using VRGIN.Core;
+using VRMOD.CoreModule;
 using VRMOD.Extension;
 
-namespace VRGIN.Controls
+namespace VRMOD.Controls
 {
     public abstract class Controller : ProtectedBehaviour
     {

@@ -68,7 +68,6 @@ public class SteamVR_ControllerManager : MonoBehaviour
 
 	void OnEnable()
 	{
-        VRGIN.Core.VRLog.Info("On Enabled");
 		for (int i = 0; i < objects.Length; i++)
 		{
 			var obj = objects[i];
@@ -91,7 +90,6 @@ public class SteamVR_ControllerManager : MonoBehaviour
 
 	void OnDisable()
 	{
-        VRGIN.Core.VRLog.Info("On Disabled");
         inputFocusAction.enabled = false;
 		deviceConnectedAction.enabled = false;
 		trackedDeviceRoleChangedAction.enabled = false;

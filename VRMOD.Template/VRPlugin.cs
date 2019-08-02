@@ -1,12 +1,6 @@
 ﻿using IllusionPlugin;
 using System;
-using System.Collections;
-using System.IO;
-using System.Xml.Serialization;
-using UnityEngine;
-using VRGIN.Core;
 using VRMOD.CoreModule;
-using VRMOD.Mode;
 
 namespace VRMOD
 {

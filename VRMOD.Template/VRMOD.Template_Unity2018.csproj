@@ -100,8 +100,8 @@
     <Compile Include="Libs\uTouchInjection\Lib.cs" />
     <Compile Include="Libs\uTouchInjection\Manager.cs" />
     <Compile Include="Libs\uTouchInjection\Pointer.cs" />
-    <Compile Include="Libs\VRGIN\Controls\LeftController.cs" />
-    <Compile Include="Libs\VRGIN\Controls\RightController.cs" />
+    <Compile Include="Controls\LeftController.cs" />
+    <Compile Include="Controls\RightController.cs" />
     <Compile Include="Mode\ControlMode.cs" />
     <Compile Include="CoreModule\ResourceManager.cs" />
     <Compile Include="CoreModule\VRCamera.cs" />
@@ -115,12 +115,12 @@
     <Compile Include="Libs\uDesktopDuiplication\Monitor.cs" />
     <Compile Include="Libs\uDesktopDuiplication\Texture.cs" />
     <Compile Include="Libs\uDesktopDuiplication\Utility.cs" />
-    <Compile Include="Libs\VRGIN\Controls\Controller.cs" />
-    <Compile Include="Libs\VRGIN\Controls\IShortcut.cs" />
-    <Compile Include="Libs\VRGIN\Controls\KeyboardShortcut.cs" />
-    <Compile Include="Libs\VRGIN\Core\Logger.cs" />
-    <Compile Include="Libs\VRGIN\Core\ProtectedBahaviour.cs" />
-    <Compile Include="Libs\VRGIN\Helpers\KeyStroke.cs" />
+    <Compile Include="Controls\Controller.cs" />
+    <Compile Include="Controls\IShortcut.cs" />
+    <Compile Include="Controls\KeyboardShortcut.cs" />
+    <Compile Include="CoreModule\Logger.cs" />
+    <Compile Include="CoreModule\ProtectedBahaviour.cs" />
+    <Compile Include="Helpers\KeyStroke.cs" />
     <Compile Include="Mode\SeatedMode.cs" />
     <Compile Include="Mode\StandingMode.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -146,8 +146,6 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d /e /s $(SolutionDir)Libs\$(ProjectName) $(SolutionDir)$(OutDir)$(ProjectName)\
 copy /y $(TargetPath) $(SolutionDir)$(OutDir)$(ProjectName)\Plugins\$(TargetName)$(TargetExt)
-
-copy /y $(TargetPath) E:\PlayDisc\06_VR\yami_v1.0.2_VRMOD\Plugins\VRMOD.Template.dll
-copy /y $(TargetDir)$(TargetName).pdb E:\PlayDisc\06_VR\yami_v1.0.2_VRMOD\Plugins\VRMOD.Template.pdb</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

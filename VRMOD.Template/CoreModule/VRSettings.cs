@@ -8,8 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using UnityEngine;
-using VRGIN.Core;
-using VRGIN.Helpers;
+using VRMOD.Helpers;
 
 namespace VRMOD.CoreModule
 {

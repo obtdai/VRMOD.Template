@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VRMOD.Extension;
-using VRGIN.Core;
+using VRMOD.CoreModule;
 using UnityEngine;
 
-namespace VRGIN.Controls
+namespace VRMOD.Controls
 {
     class LeftController : Controller
     {
